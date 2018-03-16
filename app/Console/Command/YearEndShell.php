@@ -16,13 +16,21 @@ class YearEndShell extends AppShell {
             'PitchStage',
             'ClientRevenueByService',
             'ClientDeleteLog',
-            'ClientActualRevenueByYear'
+            'ClientActualRevenueByYear',
+            'User'
         );
 
         public function main() {
                 $this->autoRender = false;
                 set_time_limit(0);
                 ini_set('memory_limit', '-1');
+
+                App::import('Component','Auth');
+                $this->Auth = new AuthComponent(new ComponentCollection());
+                $adminUser = $this->User->find('first', array('conditions' => array('title' => 'System Admin')));
+                if(!empty($adminUser)) {
+                    $this->Auth->login($adminUser['User']);
+                }
 
                 $currDt = date('Y-m-d');
                 $lastYrStartDt = (date('Y')-1) . '-01-01';
