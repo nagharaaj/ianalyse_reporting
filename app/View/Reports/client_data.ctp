@@ -1331,7 +1331,7 @@
                         } else {
                                 var pitchstage = $('#update_pitchstage').text();
                         }
-                        if ((pitchstage.match(/Won/g) || pitchstage == 'Current client') && input.val() == '') {
+                        if ((pitchstage.match(/Won/g)) && input.val() == '') {
                                 return false;
                         }
                         return true;
@@ -1343,7 +1343,7 @@
                         } else {
                                 var pitchstage = $('#update_pitchstage').text();
                         }
-                        if ((pitchstage.match(/Won/g) || pitchstage == 'Current client')) {
+                        if ((pitchstage.match(/Won/g))) {
                                 if (!isNaN(parseFloat(input.val())) && isFinite(input.val())) {
                                         return true;
                                 }

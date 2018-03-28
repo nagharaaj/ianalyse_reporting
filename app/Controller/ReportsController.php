@@ -148,7 +148,7 @@ class ReportsController extends AppController {
                 $this->set('countries', json_encode($countries, JSON_HEX_APOS));
                 $this->set('currencies', json_encode($this->Currency->find('list', array('fields' => array('Currency.currency', 'Currency.currency'), 'order' => 'Currency.currency Asc'))));
                 $this->set('agencies', json_encode($this->LeadAgency->find('list', array('fields' => array('LeadAgency.agency', 'LeadAgency.agency'), 'order' => 'LeadAgency.agency Asc'))));
-                $this->set('stages', json_encode($this->PitchStage->find('list', array('conditions' => array('NOT' => array('PitchStage.id' => array(11)))),array('fields' => array('PitchStage.pitch_stage', 'PitchStage.pitch_stage'), 'order' => 'PitchStage.id Asc'))));
+                $this->set('stages', json_encode($this->PitchStage->find('list', array('conditions' => array('PitchStage.id' => array(7))),array('fields' => array('PitchStage.pitch_stage', 'PitchStage.pitch_stage'), 'order' => 'PitchStage.id Asc'))));
                 //$arrMarkets = array('Global' => 'Global');
                 $arrMarkets = array();
                 $arrRegions = array();
@@ -589,6 +589,7 @@ class ReportsController extends AppController {
                         $clientData[$i]['ActiveMarkets'] = $client['ClientRevenueByService']['active_markets'];
                         $clientData[$i]['Currency'] = $client[0]['currency'];
                         $clientData[$i]['EstimatedRevenue'] = (($client['ClientRevenueByService']['estimated_revenue'] == 0) ? '' : $client['ClientRevenueByService']['estimated_revenue']);
+                        $clientData[$i]['FiscalRevenue'] = (($client['ClientRevenueByService']['fiscal_revenue'] == 0) ? '' : $client['ClientRevenueByService']['fiscal_revenue']);
                         $clientData[$i]['ActualRevenue'] = $client['ClientRevenueByService']['actual_revenue'];
                         $clientData[$i]['Comments'] = $client['ClientRevenueByService']['comments'];
                         $clientData[$i]['Year'] = $client['ClientRevenueByService']['year'];
@@ -853,10 +854,12 @@ class ReportsController extends AppController {
 
                         $estimatedRevenue = 0;
                         $actualRevenue = 0;
+                        $fiscalRevenue = 0;
                         $currency = '';
                         if($revenueCurrency == "Actual currencies") {
                                 $estimatedRevenue = $client['ClientRevenueByService']['estimated_revenue'];
                                 $actualRevenue = $client['ClientRevenueByService']['actual_revenue'];
+                                $fiscalRevenue = $client['ClientRevenueByService']['fiscal_revenue'];
                                 $currency = $client[0]['currency'];
                         } else {
                                 $currency = $revenueCurrency;
@@ -886,35 +889,54 @@ class ReportsController extends AppController {
                                                 }
                                         }
                                 }
+                                if(is_numeric($client['ClientRevenueByService']['fiscal_revenue'])) {
+                                        if($client[0]['currency'] == $revenueCurrency) {
+                                                $fiscalRevenue = $client['ClientRevenueByService']['fiscal_revenue'];
+                                        } else {
+                                                $dollarConvertRatio = array_search($client[0]['currency'], $currencies);
+                                                if($revenueCurrency == "USD") {
+                                                     $fiscalRevenue = ($client['ClientRevenueByService']['fiscal_revenue'] * $dollarConvertRatio);
+                                                } else {
+                                                     $dollarEstRevenue = ($client['ClientRevenueByService']['fiscal_revenue'] * $dollarConvertRatio);
+                                                     $fiscalRevenue = ($dollarEstRevenue / $convertRatio);
+                        }
+                                        }
+                                }
                         }
                         if ($this->Auth->user('role') == 'Viewer') {
                                 $clientData[$i]['EstimatedRevenue'] = '';
                                 $clientData[$i]['ActualRevenue'] = '';
+                                $clientData[$i]['FiscalRevenue'] = '';
                                 $clientData[$i]['Currency'] = '';
                         } else {
                                 if ($this->Auth->user('role') == 'Regional') {
                                         if (in_array($client['ClientRevenueByService']['region_id'], $arrRegions)) {
                                                 $clientData[$i]['EstimatedRevenue'] = (($estimatedRevenue == 0) ? '' : $estimatedRevenue);
                                                 $clientData[$i]['ActualRevenue'] = $actualRevenue;
+                                                $clientData[$i]['FiscalRevenue'] = $fiscalRevenue;
                                                 $clientData[$i]['Currency'] = $currency;
                                         } else {
                                                 $clientData[$i]['EstimatedRevenue'] = '';
                                                 $clientData[$i]['ActualRevenue'] = '';
+                                                $clientData[$i]['FiscalRevenue'] = '';
                                                 $clientData[$i]['Currency'] = '';
                                         }
                                 } elseif ($this->Auth->user('role') == 'Country' || $this->Auth->user('role') == 'Country - Viewer') {
                                         if (in_array($client['ClientRevenueByService']['country_id'], $arrCountries)) {
                                                 $clientData[$i]['EstimatedRevenue'] = (($estimatedRevenue == 0) ? '' : $estimatedRevenue);
                                                 $clientData[$i]['ActualRevenue'] = $actualRevenue;
+                                                $clientData[$i]['FiscalRevenue'] = $fiscalRevenue;
                                                 $clientData[$i]['Currency'] = $currency;
                                         } else {
                                                 $clientData[$i]['EstimatedRevenue'] = '';
                                                 $clientData[$i]['ActualRevenue'] = '';
+                                                $clientData[$i]['FiscalRevenue'] = '';
                                                 $clientData[$i]['Currency'] = '';
                                         }
                                 } else {
                                         $clientData[$i]['EstimatedRevenue'] = (($estimatedRevenue == 0) ? '' : $estimatedRevenue);
                                         $clientData[$i]['ActualRevenue'] = $actualRevenue;
+                                         $clientData[$i]['FiscalRevenue'] = $fiscalRevenue;
                                         $clientData[$i]['Currency'] = $currency;
                                 }
                         }
@@ -1640,7 +1662,8 @@ class ReportsController extends AppController {
                                 $objPHPExcel->getActiveSheet()->getColumnDimension("O")->setWidth(20);
                                 $objPHPExcel->getActiveSheet()->getColumnDimension("P")->setWidth(20);
                                 $objPHPExcel->getActiveSheet()->getColumnDimension("Q")->setWidth(20);
-                                $col=17;
+                                $objPHPExcel->getActiveSheet()->getColumnDimension("R")->setWidth(20);
+                                $col=18;
                                 if($exportRevenue=="YES"){
                                         foreach($noYears as $year){
                                                 $colName = PHPExcel_Cell::stringFromColumnIndex($col);
@@ -1694,8 +1717,9 @@ class ReportsController extends AppController {
                         } else {
                                 $objPHPExcel->getActiveSheet()->SetCellValue('O1', 'Currency');
                                 $objPHPExcel->getActiveSheet()->SetCellValue('P1', 'iP '.date('Y').' Estimated Revenue');
-                                $objPHPExcel->getActiveSheet()->SetCellValue('Q1', 'iP '.(date('Y')-1).' Actual Revenue');
-                                $col = 17;
+                                $objPHPExcel->getActiveSheet()->SetCellValue('Q1', 'Fiscal Yr. ' .date('Y').' Revenue');
+                                $objPHPExcel->getActiveSheet()->SetCellValue('R1', 'iP '.(date('Y')-1).' Actual Revenue');
+                                $col = 18;
                                 if($exportRevenue == "YES") {
                                         foreach($noYears as $year)
                                         {
@@ -1751,10 +1775,12 @@ class ReportsController extends AppController {
                                 }
                                 $estimatedRevenue = 0;
                                 $actualRevenue = 0;
+                                $fiscalRevenue = 0;
                                 if ($this->Auth->user('role') != 'Viewer') {
                                         if($exportCurrency == "Actual currencies") {
                                                 $estimatedRevenue = $data['EstimatedRevenue'];
                                                 $actualRevenue = $data['ActualRevenue'];
+                                                $fiscalRevenue = $data['FiscalRevenue'];
                                         } else {
                                                 if(is_numeric($data['EstimatedRevenue'])) {
                                                         if($data['Currency'] == $exportCurrency) {
@@ -1782,11 +1808,24 @@ class ReportsController extends AppController {
                                                                 }
                                                         }
                                                 }
+                                                if(is_numeric($data['FiscalRevenue'])) {
+                                                        if($data['Currency'] == $exportCurrency) {
+                                                                $actualRevenue = $data['FiscalRevenue'];
+                                                        } else {
+                                                                $dollarConvertRatio = array_search($data['Currency'], $currencies);
+                                                                if($exportCurrency == "USD") {
+                                                                     $actualRevenue = ($data['FiscalRevenue'] * $dollarConvertRatio);
+                                                                } else {
+                                                                     $dollarEstRevenue = ($data['FiscalRevenue'] * $dollarConvertRatio);
+                                                                     $actualRevenue = ($dollarEstRevenue / $convertRatio);
+                                        }
+                                                        }
+                                                }
                                         }
                                         $row = array($data['Region'], $data['Country'], $data['City'],
                                             $data['ClientName'], $data['ParentCompany'], $data['ClientCategory'], $data['LeadAgency'],
                                             $data['PitchStage'], $data['Service'],$clientSince, $lostDate, $pitchDate, $data['MarketScope'],
-                                            html_entity_decode($data['ActiveMarkets']), $currency, (($estimatedRevenue == 0) ? '' : $estimatedRevenue),(($actualRevenue == 0) ? '' : $actualRevenue));
+                                            html_entity_decode($data['ActiveMarkets']), $currency, (($estimatedRevenue == 0) ? '' : $estimatedRevenue),(($fiscalRevenue == 0) ? '' : $fiscalRevenue),(($actualRevenue == 0) ? '' : $actualRevenue));
                                         if($exportRevenue == "YES") {
                                                 $recordId = $data['RecordId'];
                                                 if(isset($prevRevenue[$recordId])){
@@ -1823,6 +1862,7 @@ class ReportsController extends AppController {
                                         $objPHPExcel->getActiveSheet()->getStyle('A2:'.$colName.$i)->applyFromArray(array('font' => array('size'  => 11, 'name'  => 'Calibri'), 'alignment' => array('wrap' => true), 'borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN))));
                                         $objPHPExcel->getActiveSheet()->getStyle('P2:P'.$i)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00);
                                         $objPHPExcel->getActiveSheet()->getStyle('Q2:Q'.$i)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00);
+                                        $objPHPExcel->getActiveSheet()->getStyle('R2:R'.$i)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00);
                                         $objPHPExcel->getActiveSheet()->fromArray($arrDataExcel, null, 'A2');
                                         $objPHPExcel->getActiveSheet()->setAutoFilter('A1:'.$colName.$i);
                                 } else {

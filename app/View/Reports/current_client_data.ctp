@@ -5,6 +5,7 @@
              var userRole = '<?php echo $userRole; ?>';
              var estimatedRevenueColumnTitle = '<?php echo 'iP '. date('Y') . ' Estimated Revenue';?>';
              var actualRevenueColumnTitle = '<?php echo 'iP '. (date('Y')-1) . ' Actual Revenue';?>';
+             var fiscalRevenueColumnTitle = '<?php echo 'Fiscal Yr. '. date('Y') . ' Revenue'; ?>';
              var cities = jQuery.parseJSON('<?php echo $cities; ?>');
              var arrCities = $.map(cities, function(el) { return el; });
              var categories = jQuery.parseJSON('<?php echo $categories; ?>');
@@ -121,6 +122,7 @@
                     { name: 'Currency', type: 'string' },
                     { name: 'EstimatedRevenue', type: 'float' },
                     { name: 'ActualRevenue', type: 'float' },
+                    { name: 'FiscalRevenue',type:'float'},
                     { name: 'Comments', type: 'string' },
                     { name: 'ParentId', type: 'number' },
                     { name: 'SearchClientName', type: 'string' },
@@ -150,12 +152,8 @@
              var dataAdapter = new $.jqx.dataAdapter(source);
              var cellclass = function (row, datafield, value, rowdata) {
                 var stage = rowdata.PitchStage;
-                if(stage.match(/Won/g) || stage == 'Current client') {
+                if(stage == 'Current client') {
                         return classWon;
-                } else if (stage.match(/Lost/g)) {
-                        return classLost;
-                } else if (stage.match(/Live/g)) {
-                        return classLive;
                 } else {
                         return '';
                 }
@@ -287,6 +285,7 @@
                   { text: 'Active Markets', datafield: 'ActiveMarkets', width: 160, cellClassName: cellclass, filtertype: 'checkedlist', editable: false },
                   { text: 'Currency', datafield: 'Currency', width: 100, cellClassName: cellclass, filtertype: 'checkedlist', editable: false },
                   { text: estimatedRevenueColumnTitle, datafield: 'EstimatedRevenue', width: 200, align: 'left', cellsalign: 'right', cellClassName: cellclass, cellsFormat: 'f2', editable: false },
+                  { text: fiscalRevenueColumnTitle,datafield: 'FiscalRevenue',width: 200, align: 'left', cellsalign: 'right', cellClassName: cellclass, cellsFormat: 'f2',editable: false},
                   { text: actualRevenueColumnTitle, datafield: 'ActualRevenue', width: 200, align: 'left', cellsalign: 'right', cellClassName: cellclass, cellsFormat: 'f2', editable: false },
                   { text: 'Expand Data', cellsAlign: 'center', align: "left", columnType: 'none', width: 110, editable: false, sortable: false, dataField: null,filterable:false,autoshowcolumnsmenubutton: true,
                       cellsRenderer: function (row, column, value) {
@@ -419,6 +418,7 @@
                         var activemarkets = data.ActiveMarkets;
                         var currency = data.Currency;
                         var estimatedrevenue = data.EstimatedRevenue;
+                        var fiscalrevenue = data.FiscalRevenue;
                         var actualrevenue = data.ActualRevenue;
                         var comments = data.Comments;
 
@@ -501,36 +501,11 @@
                                 $("#divPitchStart").append(inpPitchStart);
                                 $("#update_pitchstart").jqxDateTimeInput({ formatString: 'MM/yyyy', width: 100, height: 25 });
                         }
-                        if(pitchstage.match(/Lost/g)) {
-                                $("#divPitchStage").text(pitchstage);
-                        } else {
                                 $("#divPitchStage").html('');
                                 var inpPitchStage = $("<div id=\"update_pitchstage\"></div>");
                                 $("#divPitchStage").append(inpPitchStage);
                                 $("#update_pitchstage").jqxDropDownList({ source: stages }).val(pitchstage);
-                                if(pitchstage != 'Current client') {
-                                        $("#update_pitchstage").jqxDropDownList('disableItem',"Current client");
-                                }
-                                if(!pitchstage.match(/Lost/g)) {
-                                        $("#update_pitchstage").jqxDropDownList('disableItem',"Lost - archive");
-                                }
-                                if(pitchstage.match(/Live/g)) {
-                                        if(pitchstage == 'Live - aggressive') {
-                                                $("#update_pitchstage").jqxDropDownList('disableItem',"Live - defensive");
-                                                $("#update_pitchstage").jqxDropDownList('disableItem',"Lost - current client");
-                                                $("#update_pitchstage").jqxDropDownList('disableItem',"Won - retained");
-                                        }
-                                        if(pitchstage == 'Live - defensive') {
-                                                $("#update_pitchstage").jqxDropDownList('disableItem',"Live - aggressive");
-                                                $("#update_pitchstage").jqxDropDownList('disableItem',"Lost - new business");
-                                                $("#update_pitchstage").jqxDropDownList('disableItem',"Won - new business");
-                                        }
-                                }
-                                rules.push(validator.pitchstage);
-                        }
-                        if(pitchstage.match(/Lost/g) || pitchstage == 'Cancelled' || pitchstage == 'Declined') {
-                                $("#divClientSince").text('');
-                        } else {
+                                
                                 $("#divClientSince").html('');
                                 var inpClientSince = $("<div id=\"update_clientsince\"></div>");
                                 $("#divClientSince").append(inpClientSince);
@@ -547,8 +522,8 @@
                                         $("#update_clientsince").val(clientSince);
                                 }
                                 rules.push(validator.clientsince);
-                        }
-                        if(pitchstage.match(/Won/g) || pitchstage == 'Current client') {
+
+                        if(pitchstage == 'Current client') {
                                 $("#divLostDate").text('No');
                         } else {
                                 $("#divLostDate").html('');
@@ -606,6 +581,7 @@
                         if(pitchstage.match(/Lost/g)) {
                                 $("#divEstRevenue").text(estimatedrevenue);
                                 $("#divActualRevenue").text(actualrevenue);
+                                $("#divFiscRevenue").text(fiscalrevenue);
                         } else {
                                 $("#divEstRevenue").html('');
                                 var inpEstRevenue = $("<input type=\"text\" id=\"update_estrevenue\" />");
@@ -615,7 +591,12 @@
                                         rules.push(validator.estrevenueRequired);
                                         rules.push(validator.estrevenueNumeric);
                                 }
-                               $("#divActualRevenue").html('');
+                                $("#divFiscRevenue").html('');
+                                var inpFiscalRevenue = $("<input type=\"text\" id=\"update_fiscrevenue\" />");
+                                $("#divFiscRevenue").append(inpFiscalRevenue);
+                                $("#update_fiscrevenue").jqxInput({ height: 25, width: 150, rtl:true }).val(fiscalrevenue);
+                                
+                                $("#divActualRevenue").html('');
                                 var inpActualRevenue = $("<input type=\"text\" id=\"update_actualrevenue\" />");
                                 $("#divActualRevenue").append(inpActualRevenue);
                                 $("#update_actualrevenue").jqxInput({ height: 25, width: 150, rtl:true }).val(actualrevenue);
@@ -672,27 +653,10 @@
                                         }
                                 }
                         });
-                        if(pitchstage.match(/Won/g) || pitchstage == "Current client") {
+                        if(pitchstage == "Current client") {
                                 $("#trUpdateClientSince").show();
 
                                 $("#trUpdateLostSince").hide();
-                        }
-                        else if(pitchstage.match(/Live/g)) {
-                                $("#trUpdateClientSince").hide();
-                                $("#trUpdateLostSince").hide();
-                        }
-                        else if(pitchstage.match(/Lost/g)) {
-                                $("#trUpdateLostSince").show();
-                                if (pitchstage.match(/current/g)) {
-                                        $("#trUpdateClientSince").show();
-                                } else {
-                                        $("#trUpdateClientSince").hide();
-                                }
-                        }
-                        else if(pitchstage == 'Cancelled' || pitchstage == 'Declined') {
-                                $("#trUpdateLostSince").show();
-
-                                $("#trUpdateClientSince").hide();
                         }
                         $('#updateForm').jqxValidator({ position: 'right', rules: rules});
                 }
@@ -751,12 +715,6 @@
                         $("#category").jqxDropDownList({ source: categories }).val(clientcategory);
                         $("#pitchstart").jqxDateTimeInput({ formatString: 'MM/yyyy', width: 100, height: 25 });
                         $("#pitchstage").jqxDropDownList({ source: stages }).val(pitchstage);
-                        if(pitchstage != 'Current client') {
-                                $("#pitchstage").jqxDropDownList('disableItem',"Current client");
-                        }
-                        if(!pitchstage.match(/Lost/g)) {
-                                $("#pitchstage").jqxDropDownList('disableItem',"Lost - archive");
-                        }
                         $("#clientsince").jqxDateTimeInput({ formatString: 'MM/yyyy', width: 100, height: 25 });
                         $("#lostdate").jqxDateTimeInput({ formatString: 'MM/yyyy', width: 100, height: 25 });
                         var lostDate = new Date(lostdate);
@@ -773,6 +731,7 @@
                         }
                         $("#currency").jqxDropDownList({ source: currencies }).val(currency);
                         $("#estrevenue").jqxInput({ height: 25, width: 100, rtl:true }).val('');
+                        $("#fiscrevenue").jqxInput({ height:25,width:100,rtl:true}).val('');
                         $("#notes").jqxInput({ height: 25, width: 200 }).val(comments);
                         // show the popup window.
                         $("#popupWindow").jqxWindow('open');
@@ -796,7 +755,7 @@
                                 var args = event.args;
                                 var item = $('#pitchstage').jqxDropDownList('getItem', args.index);
                                 if(item != null) {
-                                        if(item.label.match(/Won/g) || item.label == "Current client") {
+                                        if(item.label == "Current client") {
                                                 $("#trClientSince").show();
                                                 $("#trPitchedDate").show();
 
@@ -808,44 +767,20 @@
                                                 $("#trClientSince").hide();
                                                 $("#trLostSince").hide();
                                         }
-                                        else if(item.label.match(/Lost/g)) {
-                                                $("#trLostSince").show();
-                                                $("#trPitchedDate").show();
-                                                if (item.label.match(/current/g)) {
+                                        else if (item.label.match(/current/g)) {
                                                         $("#trClientSince").show();
-                                                 } else {
-                                                        $("#trClientSince").hide();
-                                                 }
-                                        }
-                                        else if(item.label == 'Cancelled' || item.label == 'Declined') {
-                                                $("#trLostSince").show();
-                                                $("#trPitchedDate").show();
-
-                                                $("#trClientSince").hide();
                                         }
                                 }
                         });
-                        if(pitchstage.match(/Won/g) || pitchstage == "Current client") {
+                        if( pitchstage == "Current client") {
                                 $("#trClientSince").show();
 
                                 $("#trLostSince").hide();
                         }
-                        else if(pitchstage.match(/Live/g)) {
-                                $("#trClientSince").hide();
-                                $("#trLostSince").hide();
-                        }
-                        else if(pitchstage.match(/Lost/g)) {
-                                $("#trLostSince").show();
-                                if (pitchstage.match(/current/g)) {
+                        
+                        else if (pitchstage.match(/current/g)) {
                                         $("#trClientSince").show();
-                                } else {
-                                        $("#trClientSince").hide();
-                                }
-                        }
-                        else if(pitchstage == 'Cancelled' || pitchstage == 'Declined') {
-                                $("#trLostSince").show();
-
-                                $("#trClientSince").hide();
+                                
                         }
                 }
                 deleteClick = function (event) {
@@ -1000,6 +935,7 @@
                 $("#activemarket").jqxDropDownList({ source: countries, checkboxes: true, selectedIndex: -1});
                 $("#currency").jqxDropDownList({ source: currencies, selectedIndex: -1 });
                 $("#estrevenue").jqxInput({ height: 25, width: 100, rtl:true }).val('');
+                $("#fiscrevenue").jqxInput({ height: 25, width: 100, rtl:true }).val('');
                 $("#notes").jqxInput({ height: 25, width: 200 }).val('');
                 // show the popup window.
                 $("#popupWindow").jqxWindow('open');
@@ -1023,29 +959,13 @@
                         var args = event.args;
                         var item = $('#pitchstage').jqxDropDownList('getItem', args.index);
                         if(item != null) {
-                                if(item.label.match(/Won/g) || item.label == "Current client") {
+                                if(item.label == "Current client") {
                                         $("#trClientSince").show();
                                         $("#trPitchedDate").show();
                                         $("#trLostSince").hide();
                                 }
-                                else if(item.label.match(/Live/g)) {
-                                        $("#trPitchedDate").show();
-                                        $("#trClientSince").hide();
-                                        $("#trLostSince").hide();
-                                }
-                                else if(item.label.match(/Lost/g)) {
-                                        $("#trLostSince").show();
-                                        $("#trPitchedDate").show();
-                                        if (item.label.match(/current/g)) {
+                                else if (item.label.match(/current/g)) {
                                                 $("#trClientSince").show();
-                                        } else {
-                                                $("#trClientSince").hide();
-                                        }
-                                }
-                                else if(item.label == 'Cancelled' || item.label == 'Declined') {
-                                        $("#trLostSince").show();
-                                        $("#trPitchedDate").show();
-                                        $("#trClientSince").show();
                                 }
                         }
                 });
@@ -1098,7 +1018,7 @@
                         },
                         { input: '#clientsince', message: 'Client Since is required!', action: 'change', rule: function (input) {
                                 var pitchstage = $('#pitchstage').val();
-                                if ((pitchstage.match(/Won/g) || pitchstage == 'Current client') && input.val() == '') {
+                                if (( pitchstage == 'Current client') && input.val() == '') {
                                         return false;
                                 }
                                 return true;
@@ -1183,7 +1103,7 @@
                     PitchStart: $("#pitchstart").val(),PitchStage: $("#pitchstage").val(),
                     ClientSince: $("#clientsince").val(), LostDate: $("#lostdate").val(), Service: $("#service").val(),
                     MarketScope: $("#marketscope").val(), ActiveMarkets: $("#activemarket").val(), Currency: $("#currency").val(),
-                    EstimatedRevenue: $("#estrevenue").val(), Comments: $("#notes").val(), parentId: $('#parentrecordid').val()
+                    EstimatedRevenue: $("#estrevenue").val(),FiscalRevenue: $("#fiscrevenue").val(), Comments: $("#notes").val(), parentId: $('#parentrecordid').val()
                 };
                 $.ajax({
                     type: "POST",
@@ -1248,7 +1168,7 @@
                         } else {
                                 var pitchstage = $('#update_pitchstage').text();
                         }
-                        if ((pitchstage.match(/Won/g) || pitchstage == 'Current client') && input.val() == '') {
+                        if (( pitchstage == 'Current client') && input.val() == '') {
                                 return false;
                         }
                         return true;
@@ -1294,7 +1214,7 @@
                         } else {
                                 var pitchstage = $('#update_pitchstage').text();
                         }
-                        if ((pitchstage.match(/Won/g) || pitchstage == 'Current client') && input.val() == '') {
+                        if ((pitchstage == 'Current client') && input.val() == '') {
                                 return false;
                         }
                         return true;
@@ -1306,7 +1226,7 @@
                         } else {
                                 var pitchstage = $('#update_pitchstage').text();
                         }
-                        if ((pitchstage.match(/Won/g) || pitchstage == 'Current client')) {
+                        if ((pitchstage == 'Current client')) {
                                 if(!isNaN(parseFloat(input.val())) && isFinite(input.val())) {
                                         return true;
                                 }
@@ -1322,7 +1242,7 @@
                         } else {
                                 var pitchstage = $('#update_pitchstage').text();
                         }
-                        if ((pitchstage.match(/Won/g) || pitchstage == 'Current client') && input.val() == '') {
+                        if ((pitchstage == 'Current client') && input.val() == '') {
                                 return false;
                         }
                         return true;
@@ -1334,7 +1254,7 @@
                         } else {
                                 var pitchstage = $('#update_pitchstage').text();
                         }
-                        if ((pitchstage.match(/Won/g) || pitchstage == 'Current client')) {
+                        if ((pitchstage == 'Current client')) {
                                 if (!isNaN(parseFloat(input.val())) && isFinite(input.val())) {
                                         return true;
                                 }
@@ -1425,6 +1345,11 @@
                 } else {
                         var estimatedrevenue = $('#divEstRevenue').text();
                 }
+                if($('#update_fiscrevenue').val()) {
+                        var fiscalrevenue = $('#update_fiscrevenue').val();
+                } else {
+                        var fiscalrevenue = $('#divFiscRevenue').text();
+                }
                 if($('#update_actualrevenue').val()) {
                         var actualrevenue = $('#update_actualrevenue').val();
                 } else {
@@ -1437,7 +1362,7 @@
                     PitchStart: pitchstart,PitchStage: pitchstage,
                     ClientSince: clientsince, LostDate: lostdate, Service: service,
                     MarketScope: marketscope, ActiveMarkets: activemarkets, Currency: currency,
-                    EstimatedRevenue: estimatedrevenue, ActualRevenue: actualrevenue, Comments: comments, ParentId: parentrecordid
+                    EstimatedRevenue: estimatedrevenue,FiscalRevenue: fiscalrevenue, ActualRevenue: actualrevenue, Comments: comments, ParentId: parentrecordid
                 };
 
                 var updateRow = { RecordId: recordid, ClientName: clientname, ParentCompany: parentcompany, Region: region,
@@ -1445,7 +1370,7 @@
                     PitchStart: pitchstart, PitchStage: pitchstage,
                     ClientSince: clientsince, LostDate: lostdate,
                     Service: service, ActiveMarkets: activemarkets, Currency: currency,
-                    EstimatedRevenue: estimatedrevenue, ActualRevenue: actualrevenue, Comments: comments, ParentId: parentrecordid
+                    EstimatedRevenue: estimatedrevenue,FiscalRevenue: fiscalrevenue, ActualRevenue: actualrevenue, Comments: comments, ParentId: parentrecordid
                 };
 
                 $.ajax({
@@ -1586,6 +1511,11 @@
                     <td style="width: 150px"></td>
                 </tr>
                 <tr>
+                    <td align="right">Fiscal year Revenue</td>
+                    <td align="left" style="padding-bottom: 5px;"><input type="text" id="fiscrevenue"/></td>
+                    <td style="width: 150px"></td>
+                </tr>
+                <tr>
                     <td align="right">Notes</td>
                     <td align="left" style="padding-bottom: 5px;"><input type="text" id="notes"/></td>
                     <td style="width: 150px"></td>
@@ -1683,6 +1613,11 @@
                 <tr>
                     <td align="right" style="padding-bottom: 5px; padding-right: 5px">iP estimated revenue</td>
                     <td align="left" style="padding-bottom: 5px;"><div id="divEstRevenue"></div></td>
+                    <td style="width: 150px"></td>
+                </tr>
+                <tr>
+                    <td align="right" style="padding-bottom: 5px; padding-right: 5px">Fiscal year Revenue</td>
+                    <td align="left" style="padding-bottom: 5px;"><div id="divFiscRevenue"></div></td>
                     <td style="width: 150px"></td>
                 </tr>
                 <tr>
