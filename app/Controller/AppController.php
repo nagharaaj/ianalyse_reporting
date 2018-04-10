@@ -47,7 +47,7 @@ class AppController extends Controller {
        // 'GLOBAL STRATEGY' => '/dashboard/index',
         //'DASHBOARD' => '/dashboard/global_growth',
         'CURRENT CLIENT DATA' => '/reports/current_client_report',
-        'CLIENT & NEW BUSINESS DATA' => '/reports/client_report',
+        'NEW BUSINESS DATA' => '/reports/client_report',
         'OFFICE DATA' => '/reports/office_report',
         'PERMISSIONS' => '/users/user_permissions',
         'HELP' => '/help/index'
