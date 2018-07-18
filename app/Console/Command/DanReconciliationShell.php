@@ -39,8 +39,8 @@ class DanReconciliationShell extends AppShell {
                 $emailList = $this->mailList();
 
                 //the target url of NBR system.
-                $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+               $siteUrl = 'syssp-p-nbrsffeed@dentsuaegis.com/globalappsportal.sharepoint.com/sites/NBR';
+                $userpwd = 'password01';
 
                 // curl object for read requests
                 $ch = curl_init();
@@ -84,7 +84,7 @@ class DanReconciliationShell extends AppShell {
                 $arrPitchStatus = array();
                 $offensivePitchId = null;
                 $defensivePitchId = null;
-                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
+                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid '2301cb7c-8262-465b-a94d-4be7ebd98c2e')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
                 $pitchStatusResult = $pitchStatusContent->d->results;
