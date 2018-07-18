@@ -39,8 +39,8 @@ class DanReconciliationShell extends AppShell {
                 $emailList = $this->mailList();
 
                 //the target url of NBR system.
-               $siteUrl = 'syssp-p-nbrsffeed@dentsuaegis.com/globalappsportal.sharepoint.com/sites/NBR';
-                $userpwd = 'password01';
+               $siteUrl = 'https://globalappsportal.sharepoint.com/sites/NBR';
+                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
 
                 // curl object for read requests
                 $ch = curl_init();
@@ -801,7 +801,7 @@ class DanReconciliationShell extends AppShell {
         }
 
         public function getNbrCountry($countryUrl) {
-                $userpwd = 'password01';
+                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 // curl object for read requests
                 $ch = curl_init();
                 //curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
@@ -827,7 +827,7 @@ class DanReconciliationShell extends AppShell {
         }
 
         public function getNbrCountryData($countryPitchUrl) {
-                $userpwd = 'password01';
+                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 // curl object for read requests
                 $ch = curl_init();
                 //curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
