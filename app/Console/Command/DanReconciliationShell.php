@@ -39,7 +39,7 @@ class DanReconciliationShell extends AppShell {
                 $emailList = $this->mailList();
 
                 //the target url of NBR system.
-               $siteUrl = 'https://globalappsportal.sharepoint.com/sites/NBR';
+               $siteUrl = 'globalappsportal.sharepoint.com/sites/NBR';
                 $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
 
                 // curl object for read requests
@@ -84,7 +84,7 @@ class DanReconciliationShell extends AppShell {
                 $arrPitchStatus = array();
                 $offensivePitchId = null;
                 $defensivePitchId = null;
-                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid '2301cb7c-8262-465b-a94d-4be7ebd98c2e')/items";
+                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid '41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
                 $pitchStatusResult = $pitchStatusContent->d->results;
@@ -99,7 +99,7 @@ class DanReconciliationShell extends AppShell {
                 }
                 // NBR pitch stage array id => pitch stage
                 $arrPitchStage = array();
-                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'eb47971c-2bf9-4ace-90f9-67d5117d9e31')/items";
+                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'692736e7-8c0a-415e-9a73-2f33717b1a15')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStageUrl );
                 $pitchStageContent = json_decode(curl_exec( $ch ));
                 $pitchStageResult = $pitchStageContent->d->results;
