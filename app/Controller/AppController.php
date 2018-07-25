@@ -50,7 +50,8 @@ class AppController extends Controller {
         'NEW BUSINESS DATA' => '/reports/client_report',
         'OFFICE DATA' => '/reports/office_report',
         'PERMISSIONS' => '/users/user_permissions',
-        'HELP' => '/help/index'
+        'HELP' => '/help/index',
+         'Reconcilation' => '/admin/ad_hoc_reconciliation'
     );
 
     function beforeFilter() {
