@@ -76,7 +76,7 @@ class AdminController extends AppController {
                 $emailList = array('siddharthk@evolvingsols.com');
 
                 //the target url of NBR system.
-                $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                $siteUrl = 'globalappsportal.sharepoint.com/sites/NBR/';
                 $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
 
                 // curl object for read requests
