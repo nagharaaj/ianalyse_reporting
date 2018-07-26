@@ -1131,7 +1131,8 @@ class DanDailySyncShell extends AppShell {
         }
 
         public function getNbrCountry($countryUrl) {
-                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+                 $userpwd = 'syssp-p-nbrsffeed@dentsuaegis.com:Password01';
+               
                 // curl object for read requests
                 $ch = curl_init();
                 //curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
