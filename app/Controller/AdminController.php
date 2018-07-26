@@ -76,8 +76,8 @@ class AdminController extends AppController {
                 $emailList = array('siddharthk@evolvingsols.com');
 
                 //the target url of NBR system.
-                $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+                $siteUrl = 'globalappsportal.sharepoint.com/sites/NBR/';
+                $userpwd = 'syssp-p-nbrsffeed@dentsuaegis.com:Password01';
 
                 // curl object for read requests
                 $ch = curl_init();
@@ -119,7 +119,7 @@ class AdminController extends AppController {
 
                 // NBR pitch status array id => pitch status
                 $arrPitchStatus = array();
-                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'4c47bb064-faa5-4ab7-812c-3b005843314d')/items";
+                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
                 $pitchStatusResult = $pitchStatusContent->d->results;
@@ -128,7 +128,7 @@ class AdminController extends AppController {
                 }
                 // NBR pitch stage array id => pitch stage
                 $arrPitchStage = array();
-                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'eb47971c-2bf9-4ace-90f9-67d5117d9e31')/items";
+                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'692736e7-8c0a-415e-9a73-2f33717b1a15')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStageUrl );
                 $pitchStageContent = json_decode(curl_exec( $ch ));
                 $pitchStageResult = $pitchStageContent->d->results;
