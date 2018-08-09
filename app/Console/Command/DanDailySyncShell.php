@@ -1,6 +1,15 @@
 <?php
 App::uses('CakeEmail', 'Network/Email');
+App::import ('../SharePointAPI.php');
 
+App::import ( "Thybag\SharePointAPI.php");
+App::import ( "Thybag\Auth\SharePointOnlineAuth.php");
+App::import ( "Thybag\Auth\SoapClientAuth.php");
+App::import ( "Thybag\Auth\StreamWrapperHttpAuth.php");
+App::import ( "Thybag\Service\ListService.php");
+App::import ( "Thybag\Service\QueryObjectService.php");
+ App::uses('Thybag', 'SharePointAPI');
+ $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
 class DanDailySyncShell extends AppShell {
         //public $components = array('RequestHandler');
 
@@ -45,8 +54,12 @@ class DanDailySyncShell extends AppShell {
                 $emailList = $this->mailList();
 
                 //the target url of NBR system.
-                   $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                   $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+                
+                 $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+                  $siteUrl = $spWsdl;
+                   $userpwd = $spPassword;
+                   //$siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                   //$userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
@@ -1130,7 +1143,8 @@ class DanDailySyncShell extends AppShell {
         }
 
         public function getNbrCountry($countryUrl) {
-                 $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+                $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+                 $userpwd = $spPassword;
                
                 // curl object for read requests
                 $ch = curl_init();
