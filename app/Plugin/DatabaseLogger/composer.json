@@ -26,4 +26,9 @@
 		},
 		"installer-name": "DatabaseLogger"
 	}
+	
+	
+    "require": {
+        "thybag/php-sharepoint-lists-api": "dev-master"
+    }
 }
