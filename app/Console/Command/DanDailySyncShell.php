@@ -131,7 +131,7 @@ class DanDailySyncShell extends AppShell {
                         exit(0);
                 }
 
-                // NBR pitch status array id => pitch status
+                //NBR pitch status array id => pitch status
                 $arrPitchStatus = array();
                 $offensivePitchId = null;
                 $defensivePitchId = null;
