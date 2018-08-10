@@ -1,4 +1,18 @@
 <?php
+
+namespace Thybag;
+
+App::import ('../SharePointAPI.php');
+
+App::import ( "Thybag\SharePointAPI.php");
+App::import ( "Thybag\Auth\SharePointOnlineAuth.php");
+App::import ( "Thybag\Auth\SoapClientAuth.php");
+App::import ( "Thybag\Auth\StreamWrapperHttpAuth.php");
+App::import ( "Thybag\Service\ListService.php");
+App::import ( "Thybag\Service\QueryObjectService.php");
+ App::uses('Thybag', 'SharePointAPI');
+           
+  $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
 App::uses('CakeEmail', 'Network/Email');
 
 class DanDailySyncShell extends AppShell {
@@ -45,8 +59,13 @@ class DanDailySyncShell extends AppShell {
                 $emailList = $this->mailList();
 
                 //the target url of NBR system.
-                    $siteUrl = 'globalappsportal.sharepoint.com/sites/NBR/';
-                   $userpwd = 'Password01';
+
+                 $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+                    $siteUrl = $spWsdl;
+                   $userpwd = $spPassword;
+
+                  /*  $siteUrl = 'globalappsportal.sharepoint.com/sites/NBR/';
+                   $userpwd = 'Password01';*/
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
@@ -1130,7 +1149,11 @@ class DanDailySyncShell extends AppShell {
         }
 
         public function getNbrCountry($countryUrl) {
-                 $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+
+
+           
+             $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+                 $userpwd = $spPassword;
                
                 // curl object for read requests
                 $ch = curl_init();

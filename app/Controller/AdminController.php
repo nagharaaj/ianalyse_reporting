@@ -1,7 +1,25 @@
 <?php
-App::uses('CakeEmail', 'Network/Email');
 
+namespace Thybag;
+
+App::import ('../SharePointAPI.php');
+
+App::import ( "Thybag\SharePointAPI.php");
+App::import ( "Thybag\Auth\SharePointOnlineAuth.php");
+App::import ( "Thybag\Auth\SoapClientAuth.php");
+App::import ( "Thybag\Auth\StreamWrapperHttpAuth.php");
+App::import ( "Thybag\Service\ListService.php");
+App::import ( "Thybag\Service\QueryObjectService.php");
+ App::uses('Thybag', 'SharePointAPI');
+           
+  $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+/*    $data = $sp->read('Documents');
+     var_dump($data);*/
+      App::uses('CakeEmail', 'Network/Email');
 class AdminController extends AppController {
+
+   
+
 	public $helpers = array('Html', 'Form');
 
         public $components = array('RequestHandler');
@@ -27,7 +45,7 @@ class AdminController extends AppController {
             'AdministrationLink'
         );
 
-        public $unwanted_array = array( 'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+        public $unwanted_array = array( 'Š'=>'S', 'š'=>'s', 'Ž'=>'Z' , 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
                             'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
                             'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
                             'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
@@ -55,6 +73,8 @@ class AdminController extends AppController {
                 );
         }
 
+         
+
         public function beforeRender() {
                 if($this->Auth->user()) {
                         $this->set('admNavLinks', parent::generateNav($this->arrNav, $this->Auth->user()));
@@ -62,6 +82,8 @@ class AdminController extends AppController {
         }
 
         public function ad_hoc_reconciliation () {
+
+           
 
                 $currDt = date('Y-m-d h:i:s');
                 $lastDayDt = date('Y') . '-01-01';
@@ -75,9 +97,19 @@ class AdminController extends AppController {
                 }
                 $emailList = array('siddharthk@evolvingsols.com');
 
-                //the target url of NBR system.
-                  $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                   $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+
+                //the target url of NBR system old 
+              /* $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                   $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';*/
+
+
+  //the target url of NBR system New
+
+                   $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+                    $siteUrl = $spWsdl;
+                   $userpwd = $spPassword;
+
+
                 // curl object for read requests
                 $ch = curl_init();
                 //curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
@@ -118,16 +150,20 @@ class AdminController extends AppController {
 
                 // NBR pitch status array id => pitch status
                 $arrPitchStatus = array();
-                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
+                   $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
-                $pitchStatusResult = $pitchStatusContent->d->results;
+                 $pitchStatusResult = $pitchStatusContent->d->results;
+
                 foreach($pitchStatusResult as $result) {
                         $arrPitchStatus[$result->Id] = $result->Title;
                 }
+               /* echo '<pre>';
+                print_r($result);
+                echo '</pre>';*/
                 // NBR pitch stage array id => pitch stage
                 $arrPitchStage = array();
-                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'eb47971c-2bf9-4ace-90f9-67d5117d9e31')/items";
+                 $pitchStageUrl = $siteUrl . "_api/web/lists(guid'692736e7-8c0a-415e-9a73-2f33717b1a15')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStageUrl );
                 $pitchStageContent = json_decode(curl_exec( $ch ));
                 $pitchStageResult = $pitchStageContent->d->results;
@@ -186,17 +222,20 @@ class AdminController extends AppController {
                         }
                 }
                 // NBR countries array id => country
+
                 $arrNbrCountry = array();
                 $countryUrl = $siteUrl . "_api/web/lists(guid'100f63e1-6845-4fa8-b3f3-0ee87c1dbdd5')/items";
                 curl_setopt( $ch, CURLOPT_URL, $countryUrl );
                 $countryContent = json_decode(curl_exec( $ch ));
                 $countryResult = $countryContent->d->results;
+
                 foreach($countryResult as $result) {
                         $arrNbrCountry[$result->Id] = $result->Title;
                 }
+              
 
                 // query to aggregate client revenue by services data in iProspect grouped by country, client name, pitch status
-                $clients = $this->ClientRevenueByService->find('all', array(
+                 $clients = $this->ClientRevenueByService->find('all', array(
                     'fields' => array(
                         'ClientRevenueByService.pitch_stage',
                         'group_concat(ClientRevenueByService.estimated_revenue) as estimated_revenue', 'group_concat(ClientRevenueByService.currency_id) as currency_id',
@@ -209,7 +248,8 @@ class AdminController extends AppController {
                     'group' => array('Country.country', 'ClientRevenueByService.pitch_stage'),
                     'order' => 'Country.country, ClientRevenueByService.pitch_stage asc'
                 ));
-                //echo '<pre>'; print_r($clients);
+                echo '<pre>'; print_r($clients);
+                 echo '</pre>';
 
                 $totalRevenue = 0;
                 $totalRevenueByCountry = array();
@@ -300,7 +340,7 @@ class AdminController extends AppController {
                         $countryPitchContent = json_decode(curl_exec( $ch ));
                         //echo '<pre>'; print_r($countryPitchContent); echo '</pre>'; exit(0);
                         $countryPitchResult = (isset($countryPitchContent->d)) ? $countryPitchContent->d : null;
-                        //echo '<pre>'; print_r($countryPitchResult); echo '</pre>'; exit(0);
+                        echo '<pre>'; print_r($countryPitchResult); echo '</pre>'; exit(0);
                         foreach($countryPitchResult->results as $result) {
                                 $estimatedRevenueUSD = $result->DAEstimatedAnnualRevenueUSD;
                                 $pitchStatus = $arrPitchStatus[$result->DAPitchStatusId];
@@ -362,7 +402,7 @@ class AdminController extends AppController {
                         $countryCurrency = $arrCountryCurrency[$country];
                         if($totalRevenueByCountry[$country] != $totalNbrRevenueByCountry[$country]) {
                                 // query to aggregate client revenue by services data in iProspect grouped by country, client name, pitch status
-                                $clients = $this->ClientRevenueByService->find('all', array(
+                                 $clients = $this->ClientRevenueByService->find('all', array(
                                     'fields' => array(
                                         'ClientRevenueByService.client_name', 'ClientRevenueByService.parent_company', 'ClientRevenueByService.pitch_date',
                                         'ClientRevenueByService.pitch_stage', 'ClientRevenueByService.client_since_month', 'ClientRevenueByService.client_since_year',
@@ -389,7 +429,7 @@ class AdminController extends AppController {
                                     'group' => array('Country.country', 'ClientRevenueByService.client_name', 'ClientRevenueByService.pitch_stage'),
                                     'order' => 'Country.country', 'ClientRevenueByService.client_name asc, ClientRevenueByService.pitch_stage asc, ClientRevenueByService.pitch_date desc',
                                 ));
-                                //echo '<pre>'; print_r($clients); exit(0);
+                                echo '<pre>'; print_r($clients); exit(0);
 
                                 foreach($clients as $client) {
                                         // request to check whether the client name already exists in NBR client list
