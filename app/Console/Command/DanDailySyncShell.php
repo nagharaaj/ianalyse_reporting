@@ -45,8 +45,8 @@ class DanDailySyncShell extends AppShell {
                 $emailList = $this->mailList();
 
                 //the target url of NBR system.
-                   $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                   $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+                    $siteUrl = 'globalappsportal.sharepoint.com/sites/NBR/';
+                   $userpwd = 'MEDIA\syssp-p-nbrsffeed:Password01';
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
@@ -122,7 +122,7 @@ class DanDailySyncShell extends AppShell {
                 $arrPitchStatus = array();
                 $offensivePitchId = null;
                 $defensivePitchId = null;
-                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
+                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
                 $pitchStatusResult = $pitchStatusContent->d->results;
@@ -138,7 +138,7 @@ class DanDailySyncShell extends AppShell {
 
                 // NBR pitch stage array id => pitch stage
                 $arrPitchStage = array();
-                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'eb47971c-2bf9-4ace-90f9-67d5117d9e31')/items";
+                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'692736e7-8c0a-415e-9a73-2f33717b1a15')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStageUrl );
                 $pitchStageContent = json_decode(curl_exec( $ch ));
                 $pitchStageResult = $pitchStageContent->d->results;
