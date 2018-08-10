@@ -46,7 +46,7 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
                     $siteUrl = 'globalappsportal.sharepoint.com/sites/NBR/';
-                   $userpwd = 'Password01';
+                   $userpwd = 'MEDIA:Password01';
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
