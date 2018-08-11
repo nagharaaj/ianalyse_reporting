@@ -1,6 +1,6 @@
 <?php
 
-namespace Thybag;
+/* namespace Thybag;
 
 App::import ('../SharePointAPI.php');
 
@@ -12,7 +12,7 @@ App::import ( "Thybag\Service\ListService.php");
 App::import ( "Thybag\Service\QueryObjectService.php");
  App::uses('Thybag', 'SharePointAPI');
            
-  $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+  $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');*/
 App::uses('CakeEmail', 'Network/Email');
 
 class DanDailySyncShell extends AppShell {
@@ -60,12 +60,12 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
 
-                 $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
-                    $siteUrl = $spWsdl;
-                   $userpwd = $spPassword;
+                // $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+                 //   $siteUrl = $spWsdl;
+                  // $userpwd = $spPassword;
 
-                  /*  $siteUrl = 'globalappsportal.sharepoint.com/sites/NBR/';
-                   $userpwd = 'Password01';*/
+                    $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                   $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
@@ -141,7 +141,7 @@ class DanDailySyncShell extends AppShell {
                 $arrPitchStatus = array();
                 $offensivePitchId = null;
                 $defensivePitchId = null;
-                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
+                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
                 $pitchStatusResult = $pitchStatusContent->d->results;
@@ -157,7 +157,7 @@ class DanDailySyncShell extends AppShell {
 
                 // NBR pitch stage array id => pitch stage
                 $arrPitchStage = array();
-                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'692736e7-8c0a-415e-9a73-2f33717b1a15')/items";
+                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'eb47971c-2bf9-4ace-90f9-67d5117d9e31')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStageUrl );
                 $pitchStageContent = json_decode(curl_exec( $ch ));
                 $pitchStageResult = $pitchStageContent->d->results;
@@ -1152,8 +1152,8 @@ class DanDailySyncShell extends AppShell {
 
 
            
-             $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
-                 $userpwd = $spPassword;
+           // $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+                 $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                
                 // curl object for read requests
                 $ch = curl_init();
