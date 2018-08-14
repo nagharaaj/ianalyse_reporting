@@ -2,20 +2,7 @@
 
 
       App::uses('CakeEmail', 'Network/Email');
-      App::uses('Thybag', 'SharePointAPI');
-App::import ('../SharePointAPI.php');
-
-App::import ( "Thybag\SharePointAPI.php");
-App::import ( "Thybag\Auth\SharePointOnlineAuth.php");
-App::import ( "Thybag\Auth\SoapClientAuth.php");
-App::import ( "Thybag\Auth\StreamWrapperHttpAuth.php");
-App::import ( "Thybag\Service\ListService.php");
-App::import ( "Thybag\Service\QueryObjectService.php");
- App::uses('Thybag', 'SharePointAPI');
-           
-  $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
-   $data = $sp->read('Documents');
-     var_dump($data);
+     
 class AdminController extends AppController {
 
    
@@ -99,16 +86,11 @@ class AdminController extends AppController {
 
 
                 //the target url of NBR system old 
-             /* $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                   $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';*/
+             $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                   $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
 
 
-  //the target url of NBR system New
-
-                   $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
-                    $siteUrl = $spWsdl;
-                   $userpwd = $spPassword;
-
+  
 
                 // curl object for read requests
                 $ch = curl_init();
