@@ -1,7 +1,7 @@
 <?php
 
 App::uses('CakeEmail', 'Network/Email');
-
+App::uses('Thybag', 'SharePointAPI');
 App::import ('../SharePointAPI.php');
 
 App::import ( "Thybag\SharePointAPI.php");
@@ -10,7 +10,7 @@ App::import ( "Thybag\Auth\SoapClientAuth.php");
 App::import ( "Thybag\Auth\StreamWrapperHttpAuth.php");
 App::import ( "Thybag\Service\ListService.php");
 App::import ( "Thybag\Service\QueryObjectService.php");
- App::uses('Thybag', 'SharePointAPI');
+ 
            
    $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
 
