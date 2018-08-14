@@ -1,6 +1,6 @@
 <?php
 
-/* namespace Thybag;
+App::uses('CakeEmail', 'Network/Email');
 
 App::import ('../SharePointAPI.php');
 
@@ -12,8 +12,7 @@ App::import ( "Thybag\Service\ListService.php");
 App::import ( "Thybag\Service\QueryObjectService.php");
  App::uses('Thybag', 'SharePointAPI');
            
-  $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');*/
-App::uses('CakeEmail', 'Network/Email');
+  
 
 class DanDailySyncShell extends AppShell {
         //public $components = array('RequestHandler');
@@ -60,12 +59,12 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
 
-                // $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
-                 //   $siteUrl = $spWsdl;
-                  // $userpwd = $spPassword;
+                 $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+                    $siteUrl = $spWsdl;
+                   $userpwd = $spPassword;
 
-                    $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                   $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+                   // $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                 //  $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
