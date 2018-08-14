@@ -2,7 +2,7 @@
 
 
       App::uses('CakeEmail', 'Network/Email');
-
+      App::uses('Thybag', 'SharePointAPI');
 App::import ('../SharePointAPI.php');
 
 App::import ( "Thybag\SharePointAPI.php");
