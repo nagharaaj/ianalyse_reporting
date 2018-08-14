@@ -1,7 +1,8 @@
 <?php
 
-namespace Thybag;
 
+      App::uses('CakeEmail', 'Network/Email');
+      App::uses('Thybag', 'SharePointAPI');
 App::import ('../SharePointAPI.php');
 
 App::import ( "Thybag\SharePointAPI.php");
@@ -13,9 +14,8 @@ App::import ( "Thybag\Service\QueryObjectService.php");
  App::uses('Thybag', 'SharePointAPI');
            
   $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
-/*    $data = $sp->read('Documents');
-     var_dump($data);*/
-      App::uses('CakeEmail', 'Network/Email');
+   $data = $sp->read('Documents');
+     var_dump($data);
 class AdminController extends AppController {
 
    
@@ -99,7 +99,7 @@ class AdminController extends AppController {
 
 
                 //the target url of NBR system old 
-              /* $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+             /* $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
                    $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';*/
 
 
@@ -150,7 +150,7 @@ class AdminController extends AppController {
 
                 // NBR pitch status array id => pitch status
                 $arrPitchStatus = array();
-                   $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
+                   $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
                  $pitchStatusResult = $pitchStatusContent->d->results;
@@ -163,7 +163,7 @@ class AdminController extends AppController {
                 echo '</pre>';*/
                 // NBR pitch stage array id => pitch stage
                 $arrPitchStage = array();
-                 $pitchStageUrl = $siteUrl . "_api/web/lists(guid'692736e7-8c0a-415e-9a73-2f33717b1a15')/items";
+                 $pitchStageUrl = $siteUrl . "_api/web/lists(guid'eb47971c-2bf9-4ace-90f9-67d5117d9e31')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStageUrl );
                 $pitchStageContent = json_decode(curl_exec( $ch ));
                 $pitchStageResult = $pitchStageContent->d->results;
