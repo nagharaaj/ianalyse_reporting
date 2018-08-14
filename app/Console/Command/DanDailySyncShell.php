@@ -12,7 +12,7 @@ App::import ( "Thybag\Service\ListService.php");
 App::import ( "Thybag\Service\QueryObjectService.php");
  App::uses('Thybag', 'SharePointAPI');
            
-  
+   $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
 
 class DanDailySyncShell extends AppShell {
         //public $components = array('RequestHandler');
@@ -59,7 +59,7 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
 
-                 $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
+                 
                     $siteUrl = $spWsdl;
                    $userpwd = $spPassword;
 
