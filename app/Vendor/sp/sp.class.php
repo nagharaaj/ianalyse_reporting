@@ -216,7 +216,7 @@ class SPOClient {
     protected function processToken($body)
     {
       $xml = new \DOMDocument();
-        $xml->loadXML($response);
+        $xml->loadXML($body);
         $xpath = new \DOMXPath($xml);
         if ($xpath->query("//wsse:BinarySecurityToken")->length > 0) {
             $nodeToken = $xpath->query("//wsse:BinarySecurityToken")->item(0);
