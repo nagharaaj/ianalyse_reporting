@@ -1,5 +1,5 @@
 <?php
-
+App::import('Vendor', 'sp', array('file' => 'sp' . DS . 'sp.class.php'));
 App::uses('CakeEmail', 'Network/Email');
 
 class DanDailySyncShell extends AppShell {
@@ -46,9 +46,9 @@ class DanDailySyncShell extends AppShell {
                 $emailList = $this->mailList();
 
                 //the target url of NBR system.
-
-                   $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                  $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+$sp = new SPOClient($username, $password, $url, $client, $authCookies, $data);
+                   $siteUrl = $url;
+                  $userpwd = $password;
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
