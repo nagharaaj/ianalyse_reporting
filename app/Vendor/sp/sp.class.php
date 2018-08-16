@@ -14,6 +14,9 @@ class SPOClient {
      * SharePoint Site url
      * @var string
      */
+    
+    
+   public $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
     public $url;
     /**
      * SPO Auth cookie
