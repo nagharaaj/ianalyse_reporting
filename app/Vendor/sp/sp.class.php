@@ -215,19 +215,22 @@ class SPOClient {
      */
     protected function processToken($body)
     {
-        $xml = new \DOMDocument();
-        $xml->loadXML($body);
+      $xml = new \DOMDocument();
+        $xml->loadXML($response);
         $xpath = new \DOMXPath($xml);
+        if ($xpath->query("//wsse:BinarySecurityToken")->length > 0) {
+            $nodeToken = $xpath->query("//wsse:BinarySecurityToken")->item(0);
+            if (!empty($nodeToken)) {
+              return $nodeToken->nodeValue;
+            }
+        }
+
         if ($xpath->query("//S:Fault")->length > 0) {
-            echo "test";
-            $nodeErr = $xpath->query("//S:Fault/S:Detail/psf:error/psf:internalerror/psf:text");
-            throw new \Exception($nodeErr->nodeValue);
+            // Returning the full fault value in case any other response comes within the fault node.
+            throw new \RuntimeException($xpath->query("//S:Fault")->item(0)->nodeValue);
         }
-        $nodeToken = $xpath->query("//wsse:BinarySecurityToken");
-        if (empty($nodeToken)) {
-            throw new \RuntimeException('Error trying to get a token, check your URL or credentials');
-        }
-        return $nodeToken->nodeValue;
+
+        throw new \RuntimeException('Error trying to get a token, check your URL or credentials');
     }
     /**
      * Construct the XML to request the security token
