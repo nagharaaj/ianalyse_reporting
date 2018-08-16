@@ -216,10 +216,10 @@ class SPOClient {
         $xml->loadXML($body);
         $xpath = new \DOMXPath($xml);
         if ($xpath->query("//S:Fault")->length > 0) {
-            $nodeErr = $xpath->query("//S:Fault/S:Detail/psf:error/psf:internalerror/psf:text")->item(0);
+            $nodeErr = $xpath->query("//S:Fault/S:Detail/psf:error/psf:internalerror/psf:text");
             throw new \Exception($nodeErr->nodeValue);
         }
-        $nodeToken = $xpath->query("//wsse:BinarySecurityToken")->item(0);
+        $nodeToken = $xpath->query("//wsse:BinarySecurityToken");
         if (empty($nodeToken)) {
             throw new \RuntimeException('Error trying to get a token, check your URL or credentials');
         }
