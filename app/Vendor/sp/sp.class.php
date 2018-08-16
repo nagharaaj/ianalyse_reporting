@@ -16,7 +16,7 @@ class SPOClient {
      */
     
     
-   public $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
+   
     public $url;
     /**
      * SPO Auth cookie
@@ -219,6 +219,7 @@ class SPOClient {
         $xml->loadXML($body);
         $xpath = new \DOMXPath($xml);
         if ($xpath->query("//S:Fault")->length > 0) {
+            echo "test";
             $nodeErr = $xpath->query("//S:Fault/S:Detail/psf:error/psf:internalerror/psf:text");
             throw new \Exception($nodeErr->nodeValue);
         }
