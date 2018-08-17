@@ -303,7 +303,7 @@ class HttpUtilities {
 // =========================================
 function connectSPO($url, $username, $password){
     try {
-       echo $client = new SPOClient($url);
+        $client = new SPOClient($url);
         $client->signIn($username, $password);
     } catch (Exception $e){
         echo 'Authentication failed: ',  $e->getMessage(), "\n";
