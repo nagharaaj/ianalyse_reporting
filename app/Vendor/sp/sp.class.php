@@ -303,7 +303,7 @@ class HttpUtilities {
 // =========================================
 function connectSPO($url, $username, $password){
     try {
-        $client = new SPOClient($url);
+       echo $client = new SPOClient($url);
         $client->signIn($username, $password);
     } catch (Exception $e){
         echo 'Authentication failed: ',  $e->getMessage(), "\n";
@@ -327,7 +327,7 @@ function getData($host, $authCookies){
 // =========================================
 $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
 $password = 'Password01';
-$url      = 'https://globalappsportal.sharepoint.com/sites/NBR';
+$url      = 'https://globalappsportal.sharepoint.com/sites/NBR/{692736e7-8c0a-415e-9a73-2f33717b1a15}';
 $client = connectSPO($url, $username, $password);
 $authCookies = 'FedAuth=' . $client->FedAuth . ';rtFa=' . $client->rtFa;
 $data = getData($url, $authCookies);
