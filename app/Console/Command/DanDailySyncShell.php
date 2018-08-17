@@ -56,7 +56,7 @@ class DanDailySyncShell extends AppShell {
                   $siteUrl = $url;
                    $userpwd =$password ;*/
                       $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                  $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!'
+                    $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
