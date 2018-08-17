@@ -47,7 +47,7 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
                 $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
-                $password = 'Password01';
+                $password = 'MEDIA\sysSP-P-NBR:Password01';
                $url      = 'https://globalappsportal.sharepoint.com/sites/NBR';
                  $client = connectSPO($url, $username, $password);
                  $authCookies = 'FedAuth=' . $client->FedAuth . ';rtFa=' . $client->rtFa;
