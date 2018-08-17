@@ -48,11 +48,11 @@ class DanDailySyncShell extends AppShell {
                 //the target url of NBR system.
                 $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
                 $password = 'MEDIA\sysSP-P-NBR:Password01';
-               $url      = 'https://globalappsportal.sharepoint.com/sites/NBR';
+                 $url      = 'https://globalappsportal.sharepoint.com/sites/NBR/{692736e7-8c0a-415e-9a73-2f33717b1a15}';
                  $client = connectSPO($url, $username, $password);
                  $authCookies = 'FedAuth=' . $client->FedAuth . ';rtFa=' . $client->rtFa;
                 $data = getData($url, $authCookies);
-    $sp = new SPOClient($username, $password, $url, $client, $authCookies, $data);
+                $sp = new SPOClient($username, $password, $url, $client, $authCookies, $data);
                   $siteUrl = $url;
                    $userpwd =$password ;
                 //array of iProspect pitch status mappings with NBR
