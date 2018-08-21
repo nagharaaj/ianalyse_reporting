@@ -48,15 +48,15 @@ class DanDailySyncShell extends AppShell {
                 //the target url of NBR system.
                $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
                 $password = 'MEDIA\sysSP-P-NBR:Password01';
-                 $url      = 'https://globalappsportal.sharepoint.com/sites/NBR/{692736e7-8c0a-415e-9a73-2f33717b1a15}';
+                 $url      = 'https://globalappsportal.sharepoint.com/sites/NBR/';
                  $client = connectSPO($url, $username, $password);
                  $authCookies = 'FedAuth=' . $client->FedAuth . ';rtFa=' . $client->rtFa;
                 $data = getData($url, $authCookies);
                 $sp = new SPOClient($username, $password, $url, $client, $authCookies, $data);
                   $siteUrl = $url;
                    $userpwd =$password ;
-                      $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                    $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+                     // $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                   // $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
