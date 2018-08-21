@@ -1,5 +1,5 @@
 <?php
-//App::import('Vendor', 'sp', array('file' => 'sp' . DS . 'sp.class.php'));
+App::import('Vendor', 'sp', array('file' => 'sp' . DS . 'sp.class.php'));
 App::uses('CakeEmail', 'Network/Email');
 
 class DanDailySyncShell extends AppShell {
@@ -46,7 +46,7 @@ class DanDailySyncShell extends AppShell {
                 $emailList = $this->mailList();
 
                 //the target url of NBR system.
-                /*$username = 'syssp-p-nbrsffeed@dentsuaegis.com';
+               $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
                 $password = 'MEDIA\sysSP-P-NBR:Password01';
                  $url      = 'https://globalappsportal.sharepoint.com/sites/NBR/{692736e7-8c0a-415e-9a73-2f33717b1a15}';
                  $client = connectSPO($url, $username, $password);
@@ -54,7 +54,7 @@ class DanDailySyncShell extends AppShell {
                 $data = getData($url, $authCookies);
                 $sp = new SPOClient($username, $password, $url, $client, $authCookies, $data);
                   $siteUrl = $url;
-                   $userpwd =$password ;*/
+                   $userpwd =$password ;
                       $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
                     $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 //array of iProspect pitch status mappings with NBR
