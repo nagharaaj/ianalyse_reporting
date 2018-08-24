@@ -44,6 +44,47 @@ class DanDailySyncShell extends AppShell {
                 $currTime = date('m/d/Y H:i:s');
                 $nextSyncTime = date('m/d/Y H:i:s', strtotime('+1 days'));
                 $emailList = $this->mailList();
+                
+                
+ if (isset($_GET['code'])) {
+    // try to get an access token
+    $code = $_GET['code'];
+    $url = 'https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2/';
+    $params = array(
+        "code" => $code,
+        "client_id" =>'96d6293f-922a-4cb0-bbb1-38e58eb16008' ,
+        "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
+        "redirect_uri" => 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"]'',
+        "grant_type" => "authorization_code"
+    );
+  $ch = curl_init();
+    curl_setopt($ch, constant("CURLOPT_" . 'URL'), $url);
+    curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
+    curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $params);
+    $output = curl_exec($ch);
+    $info = curl_getinfo($ch);
+    curl_close($ch);
+    if ($info['http_code'] === 200) {
+        header('Content-Type: ' . $info['content_type']);
+        return $output;
+    } else {
+        return 'An error happened';
+    }
+} else {
+
+    $url = "https://accounts.google.com/o/oauth2/auth";
+
+    $params = array(
+        "response_type" => "code",
+        "client_id" => '96d6293f-922a-4cb0-bbb1-38e58eb16008',
+        "redirect_uri" => 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"]'',
+        "scope" => "https://www.googleapis.com/auth/plus.me"
+    );
+
+    $request_to = $url . '?' . http_build_query($params);
+
+    header("Location: " . $request_to);
+}
 
                 //the target url of NBR system.
               /* $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
