@@ -54,7 +54,7 @@ class DanDailySyncShell extends AppShell {
         "code" => $code,
         "client_id" =>'96d6293f-922a-4cb0-bbb1-38e58eb16008' ,
         "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
-        "redirect_uri" => 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"]'',
+        "redirect_uri" => 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"],
         "grant_type" => "authorization_code"
     );
   $ch = curl_init();
@@ -77,7 +77,7 @@ class DanDailySyncShell extends AppShell {
     $params = array(
         "response_type" => "code",
         "client_id" => '96d6293f-922a-4cb0-bbb1-38e58eb16008',
-        "redirect_uri" => 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"]'',
+        "redirect_uri" => 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"],
         "scope" => "https://www.googleapis.com/auth/plus.me"
     );
 
