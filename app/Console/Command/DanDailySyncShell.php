@@ -46,7 +46,7 @@ class DanDailySyncShell extends AppShell {
                 $emailList = $this->mailList();
                 
                 
- if (isset($_GET['code'])) {
+/* if (isset($_GET['code'])) {
     // try to get an access token
     $code = $_GET['code'];
     $url = 'https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2/';
@@ -87,7 +87,7 @@ class DanDailySyncShell extends AppShell {
 }
 
                 //the target url of NBR system.
-              /* $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
+              $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
                 $password = 'MEDIA\sysSP-P-NBR:Password01';
                  $url      = 'https://globalappsportal.sharepoint.com/sites/NBR/{6e8992ec-76d5-4ea5-8eae-b0c5e558749a}';
                  $client = connectSPO($url, $username, $password);
