@@ -84,14 +84,14 @@ class AdminController extends AppController {
                 }
                 $emailList = array('siddharthk@evolvingsols.com');
 
- if (isset($_GET['code'])) {
+if (isset($_GET['code'])) {
     // try to get an access token
     $code = $_GET['code'];
-    $url = 'https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2/';
+     echo $url = 'https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2/';
     $params = array(
         "code" => $code,
         "client_id" =>'96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a' ,
-        "client_secret" => '00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a',
+        "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=&grant_type=client_credentials&resource=00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a',
         "redirect_uri" => 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"],
         "grant_type" => "authorization_code"
     );
@@ -109,14 +109,19 @@ class AdminController extends AppController {
         return 'An error happened';
     }
 } else {
-    $url = "https://accounts.google.com/o/oauth2/auth";
+
+
+   $url = "https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2/";
+
     $params = array(
         "response_type" => "code",
-        "client_id" => '96d6293f-922a-4cb0-bbb1-38e58eb16008',
+        "client_id" => '96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a',
         "redirect_uri" => 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"],
         "scope" => "https://www.googleapis.com/auth/plus.me"
     );
+
     $request_to = $url . '?' . http_build_query($params);
+
     header("Location: " . $request_to);
 }
                 //the target url of NBR system old 
