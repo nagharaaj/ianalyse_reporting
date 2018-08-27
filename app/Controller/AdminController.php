@@ -84,7 +84,7 @@ class AdminController extends AppController {
                 }
                 $emailList = array('siddharthk@evolvingsols.com');
 
-/* if (isset($_GET['code'])) {
+ if (isset($_GET['code'])) {
     // try to get an access token
     $code = $_GET['code'];
      echo $url = 'https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2/';
@@ -123,7 +123,7 @@ class AdminController extends AppController {
     $request_to = $url . '?' . http_build_query($params);
 
     header("Location: " . $request_to);
-}*/
+}
                 //the target url of NBR system old 
              $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
                    $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
