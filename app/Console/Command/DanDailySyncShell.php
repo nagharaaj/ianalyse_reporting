@@ -46,7 +46,7 @@ class DanDailySyncShell extends AppShell {
                 $emailList = $this->mailList();
                 
                 
-/* if (isset($_GET['code'])) {
+ if (isset($_GET['code'])) {
     // try to get an access token
     $code = $_GET['code'];
     $url = 'https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2/';
@@ -87,55 +87,13 @@ class DanDailySyncShell extends AppShell {
 }
 
                 //the target url of NBR system.
-              $username = 'syssp-p-nbrsffeed@dentsuaegis.com';
-                $password = 'MEDIA\sysSP-P-NBR:Password01';
-                 $url      = 'https://globalappsportal.sharepoint.com/sites/NBR/{6e8992ec-76d5-4ea5-8eae-b0c5e558749a}';
-                 $client = connectSPO($url, $username, $password);
-                 $authCookies = 'FedAuth=' . $client->FedAuth . ';rtFa=' . $client->rtFa;
-                $data = getData($url, $authCookies);
-                $sp = new SPOClient($username, $password, $url, $client, $authCookies, $data);
-                  $siteUrl = $url;
-                   $userpwd =$password ;*/
+             
                     //$siteUrl = 'team.dentsuaegis.com/sites/nbr/';
                    //$userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 
-                $authurl = "https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/token/";
-
-$client_id = "96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a";
-$client_secret = "FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=";
-// Creating base 64 encoded authkey
-$Auth_Key = $client_id.":".$client_secret;
-$encoded_Auth_Key=base64_encode($Auth_Key);
-
-$headers = array();
-$headers['Authorization'] = "Basic ".$encoded_Auth_Key;
-$headers['Content-Type'] = "application/x-www-form-urlencoded";
-
-$data = array(
-    'grant_type' => 'client_credentials',
-    'scope'      => 'read write',
-    'username'   => 'syssp-p-nbrsffeed@dentsuaegis.com',
-    'password'   => 'Password01',
-    'resource'   => '00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a'
-);
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $authurl);
-curl_setopt($ch, CURLOPT_POST, 1 );
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+              
 
 
-$auth = curl_exec( $ch );
-
-if ( curl_errno( $ch ) ){
-    echo 'Error: ' . curl_error( $ch );
-}
-curl_close($ch);
-
-$secret = json_decode($auth);
-$access_key = $secret->access_token;
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
