@@ -127,8 +127,8 @@ $access_key = $secret->access_token;
 
 		
              //the target url of NBR system old 
-             $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                   $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+            // $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                  // $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
 
 
   
