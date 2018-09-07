@@ -1,6 +1,6 @@
 <?php
 //App::import('Vendor', 'sp', array('file' => 'sp' . DS . 'sp.class.php'));
- App::import('Vendor', 'Google_Client', array('file' => 'Google_Client' . DS . 'Google_Client.php'));
+// App::import('Vendor', 'Google_Client', array('file' => 'Google_Client' . DS . 'Google_Client.php'));
 App::uses('CakeEmail', 'Network/Email');
 
 class DanDailySyncShell extends AppShell {
@@ -47,7 +47,7 @@ class DanDailySyncShell extends AppShell {
                 $emailList = $this->mailList();
                 
                 
-                 $clinet= new Google_Client();
+                /*  $clinet= new Google_Client();
                    $code = null;
 
                 
@@ -82,17 +82,17 @@ class DanDailySyncShell extends AppShell {
       }
     return true;
 
-   /*$authUrl = $this->createAuthUrl($service['scope']);
-    header('Location: ' . $authUrl);*/
-    }
+  $authUrl = $this->createAuthUrl($service['scope']);
+    header('Location: ' . $authUrl);
+    }*/
 
    
 
                 //the target url of NBR system.
              
-                   $siteUrl = 'globalappsportal.sharepoint.com/sites/NBR';
-                   $userpwd = 'Password01';
-                
+                 $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+
               
 
 
