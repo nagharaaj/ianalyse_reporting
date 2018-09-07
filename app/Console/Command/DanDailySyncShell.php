@@ -86,7 +86,7 @@ class DanDailySyncShell extends AppShell {
     header('Location: ' . $authUrl);*/
 
 
-   return  true;
+   
 
                 //the target url of NBR system.
              
@@ -1208,5 +1208,6 @@ class DanDailySyncShell extends AppShell {
 
                 return $this->nbrCountries;
         }
+         return true;
 }
 }
