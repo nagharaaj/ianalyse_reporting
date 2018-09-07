@@ -28,7 +28,7 @@ $apiConfig = array(
     // OAuth2 Settings, you can get these keys at https://code.google.com/apis/console
     'oauth2_client_id' => '96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a',
     'oauth2_client_secret' => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
-    'oauth2_redirect_uri' => 'http://connectiprospect.com/,
+    'oauth2_redirect_uri' => 'http://connectiprospect.com/',
 
     // The developer key, you get this at https://code.google.com/apis/console
     'developer_key' => '',
