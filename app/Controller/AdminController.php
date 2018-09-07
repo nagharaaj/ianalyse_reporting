@@ -2,6 +2,7 @@
 
 
       App::uses('CakeEmail', 'Network/Email');
+ App::import('Vendor', 'Google_Client', array('file' => 'Google_Client' . DS . 'Google_Client.php'));
      
 class AdminController extends AppController {
 
@@ -85,21 +86,59 @@ class AdminController extends AppController {
                 $emailList = array('siddharthk@evolvingsols.com');
 
 		
-		if (isset($_GET['code'])) {
+		//if (isset($_GET['code'])) {
 
     // try to get an access token
     //$url = 'https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2/';
-      $url = 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize/';
-    $params = array(
-        "code" => $code,
-        "client_id" =>'96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a' ,
-        "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
-         "redirect_uri" => 'https://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"],
-         "grant_type" => 'authorization_code',
+      //$url = 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize/';
+    //$params = array(
+        //"code" => $code,
+       // "client_id" =>'96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a' ,
+       // "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
+       //  "redirect_uri" => 'https://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"],
+       //  "grant_type" => 'authorization_code',
          //"resource" =>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2'
 
-     );
+   //  );
          
+		
+		$clinet= new Google_Client();
+  $code = null;
+		
+		
+		if (!$code && isset($_GET['code'])) {
+      $code = $_GET['code'];
+    }
+
+    if ($code) {
+        echo "adad";
+      // We got here from the redirect from a successful authorization grant, fetch the access token
+      $request = Google_Client::$io->makeRequest(new Google_HttpRequest(self::OAUTH2_TOKEN_URI, 'POST', array(), array(
+          'code' => $code,
+          'grant_type' => 'authorization_code',
+          'redirect_uri' => $this->redirectUri,
+          'client_id' => $this->clientId,
+          'client_secret' => $this->clientSecret
+      )));
+
+      if ($request->getResponseHttpCode() == 200) {
+
+        $this->setAccessToken($request->getResponseBody());
+        $this->token['created'] = time();
+        echo $this->getAccessToken();
+
+        return $this->getAccessToken();
+
+
+      } else {
+     $response = $request->getResponseBody();
+        $decodedResponse = json_decode($response,true );
+        if ($decodedResponse != null && $decodedResponse['error']) {
+          $response = $decodedResponse['error'];
+        }
+        throw new Google_AuthException("Error fetching OAuth2 access token, message: '$response'", $request->getResponseHttpCode());
+      }
+		
   $ch = curl_init();
     curl_setopt($ch, constant("CURLOPT_" . 'URL'), $url);
     curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
