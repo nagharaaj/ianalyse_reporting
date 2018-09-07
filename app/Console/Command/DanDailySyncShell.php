@@ -80,11 +80,11 @@ class DanDailySyncShell extends AppShell {
         }
         throw new Google_AuthException("Error fetching OAuth2 access token, message: '$response'", $request->getResponseHttpCode());
       }
-    
+    return true;
 
    /*$authUrl = $this->createAuthUrl($service['scope']);
     header('Location: ' . $authUrl);*/
-
+    }
 
    
 
@@ -1208,6 +1208,6 @@ class DanDailySyncShell extends AppShell {
 
                 return $this->nbrCountries;
         }
-         return true;
-}
+       
+
 }
