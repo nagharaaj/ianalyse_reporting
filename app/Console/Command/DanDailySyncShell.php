@@ -90,8 +90,9 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
              
-                 $siteUrl = 'syssp-p-nbrsffeed@dentsuaegis.com';
-                $userpwd =  'Password01';
+               $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+
 
               
 
@@ -103,7 +104,7 @@ class DanDailySyncShell extends AppShell {
                 $services = $this->Service->find('list', array('fields' => array('Service.id', 'Service.dan_mapping')));
                 $serviceMappings = $this->Service->find('list', array('fields' => array('Service.service_name', 'Service.dan_mapping')));
                 $cities = $this->City->find('list', array('fields' => array('City.id', 'City.city')));
-$code=NULL;
+ /*$code=NULL;
 $resource='00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2';
 $redirect_uri='http://connectiprospect.com/';
 $client_ID="96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a";
@@ -113,7 +114,7 @@ $scope="https://www.googleapis.com/auth/plus.me";
 
 $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/token';
  $data = array('code'=>$code,'resource'=>$resource,'redirect_uri' => $redirect_uri, 'client_id' => $client_ID, 'scope' => $scope, 'grant_type' => $grant_type, 'client_secret' => $client_secret);
-                // curl object for read requests
+                // curl object for read requests*/
                 $ch = curl_init();
                   //curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
               
@@ -163,8 +164,8 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 curl_setopt($ch, constant("CURLOPT_" . 'URL'), $url);
                 
                 curl_setopt($ch, CURLOPT_URL, $url . "_api/web" );
-                curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
-                curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
+                //curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
+                //curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 $checkStatus = curl_exec( $ch );
                 $responseStatus = curl_getinfo( $ch );
                 if($responseStatus['http_code'] != 200) {
