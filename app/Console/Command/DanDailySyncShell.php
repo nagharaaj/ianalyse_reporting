@@ -90,8 +90,8 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
              
-                 $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+                 $siteUrl = 'syssp-p-nbrsffeed@dentsuaegis.com';
+                $userpwd =  'Password01';
 
               
 
@@ -116,60 +116,55 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 // curl object for read requests
                 $ch = curl_init();
                   //curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
-                curl_setopt($ch, constant("CURLOPT_" . 'URL'), $url);
-    curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
-    curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
-                //curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
-                //curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
-                //curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                //curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 25 );
-                //curl_setopt( $ch, CURLOPT_TIMEOUT, 25 );
-               // curl_setopt($ch, CURLOPT_USERPWD, $userpwd);
-                //curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
+              
+                curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
+                curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 25 );
+               curl_setopt( $ch, CURLOPT_TIMEOUT, 25 );
+                curl_setopt($ch, CURLOPT_USERPWD, $userpwd);
+                url_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array("accept: application/json;odata=verbose"));
 
                 // curl object for write requests
                 $ch1 = curl_init();
-                 $ch1 = curl_init();
-                   curl_setopt($ch1, constant("CURLOPT_" . 'URL'), $url);
-              curl_setopt($ch1, constant("CURLOPT_" . 'POST'), true);
-              curl_setopt($ch1, constant("CURLOPT_" . 'POSTFIELDS'), $data);
-                //curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
-                ///curl_setopt( $ch1, CURLOPT_CONNECTTIMEOUT, 25 );
-                //curl_setopt( $ch1, CURLOPT_TIMEOUT, 25 );
-                //curl_setopt($ch1, CURLOPT_USERPWD, $userpwd);
-               // curl_setopt($ch1, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
+                
+                  
+                curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt( $ch1, CURLOPT_CONNECTTIMEOUT, 25 );
+                curl_setopt( $ch1, CURLOPT_TIMEOUT, 25 );
+                curl_setopt($ch1, CURLOPT_USERPWD, $userpwd);
+                curl_setopt($ch1, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
                 curl_setopt($ch1, CURLOPT_HTTPHEADER, array("content-type: application/json;odata=verbose", "accept: application/json;odata=verbose"));
                 curl_setopt($ch1, CURLOPT_POST, true);
 
                 // curl object for update requests
                 $ch2 = curl_init();
-                curl_setopt($ch2, constant("CURLOPT_" . 'URL'), $url);
-    curl_setopt($ch2, constant("CURLOPT_" . 'POST'), true);
-    curl_setopt($ch2, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-               // curl_setopt( $ch2, CURLOPT_CONNECTTIMEOUT, 25 );
-               // curl_setopt( $ch2, CURLOPT_TIMEOUT, 25 );
-                //curl_setopt($ch2, CURLOPT_USERPWD, $userpwd);
+                curl_setopt( $ch2, CURLOPT_CONNECTTIMEOUT, 25 );
+               curl_setopt( $ch2, CURLOPT_TIMEOUT, 25 );
+                curl_setopt($ch2, CURLOPT_USERPWD, $userpwd);
                 curl_setopt($ch2, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
                 curl_setopt($ch2, CURLOPT_HTTPHEADER, array("content-type: application/json;odata=verbose", "accept: application/json;odata=verbose", "If-Match: *"));
                 curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, 'MERGE');
 
                 // curl object for delete requests
                 $ch3 = curl_init();
-                 curl_setopt($ch3, constant("CURLOPT_" . 'URL'), $url);
-                curl_setopt($ch3, constant("CURLOPT_" . 'POST'), true);
-                curl_setopt($ch3, constant("CURLOPT_" . 'POSTFIELDS'), $data);
+                
                 curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
-                //curl_setopt( $ch3, CURLOPT_CONNECTTIMEOUT, 25 );
-                //curl_setopt( $ch3, CURLOPT_TIMEOUT, 25 );
-                //curl_setopt($ch3, CURLOPT_USERPWD, $userpwd);
-                //curl_setopt($ch3, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
+                curl_setopt( $ch3, CURLOPT_CONNECTTIMEOUT, 25 );
+                curl_setopt( $ch3, CURLOPT_TIMEOUT, 25 );
+                curl_setopt($ch3, CURLOPT_USERPWD, $userpwd);
+                curl_setopt($ch3, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
                 curl_setopt($ch3, CURLOPT_HTTPHEADER, array("content-type: application/json;odata=verbose", "accept: application/json;odata=verbose", "If-Match: *"));
                 curl_setopt($ch3, CURLOPT_CUSTOMREQUEST, 'DELETE');
 
                 // check if the web service available and the target site is accessible.
-                curl_setopt( $ch, CURLOPT_URL, $url . "_api/web" );
+                curl_setopt($ch, constant("CURLOPT_" . 'URL'), $url);
+                
+                curl_setopt($ch, CURLOPT_URL, $url . "_api/web" );
+                curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
+                curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 $checkStatus = curl_exec( $ch );
                 $responseStatus = curl_getinfo( $ch );
                 if($responseStatus['http_code'] != 200) {
