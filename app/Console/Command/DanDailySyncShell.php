@@ -105,7 +105,7 @@ class DanDailySyncShell extends AppShell {
                 $cities = $this->City->find('list', array('fields' => array('City.id', 'City.city')));
 $code=NULL;
 $resource='00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2';
-$redirect_uri='https://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"];
+$redirect_uri='http://connectiprospect.com/;
 $client_ID="96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a";
 $grant_type ="client_credentials";
 $client_secret="FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=";
