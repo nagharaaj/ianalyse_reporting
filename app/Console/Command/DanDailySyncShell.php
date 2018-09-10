@@ -117,13 +117,13 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 $ch = curl_init();
                   //curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
               
-                curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
-                curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
+                //curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
+               // curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 25 );
                curl_setopt( $ch, CURLOPT_TIMEOUT, 25 );
                 curl_setopt($ch, CURLOPT_USERPWD, $userpwd);
-                url_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
+                curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array("accept: application/json;odata=verbose"));
 
                 // curl object for write requests
