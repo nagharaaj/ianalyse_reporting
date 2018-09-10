@@ -161,9 +161,9 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 curl_setopt($ch3, CURLOPT_CUSTOMREQUEST, 'DELETE');
 
                 // check if the web service available and the target site is accessible.
-                curl_setopt($ch, constant("CURLOPT_" . 'URL'), $url);
+                curl_setopt( $ch, CURLOPT_URL, $siteUrl . "_api/web" );
                 
-                curl_setopt($ch, CURLOPT_URL, $url . "_api/web" );
+                //curl_setopt($ch, CURLOPT_URL, $url . "_api/web" );
                 //curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
                 //curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 $checkStatus = curl_exec( $ch );
