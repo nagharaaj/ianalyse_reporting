@@ -103,9 +103,22 @@ class DanDailySyncShell extends AppShell {
                 $services = $this->Service->find('list', array('fields' => array('Service.id', 'Service.dan_mapping')));
                 $serviceMappings = $this->Service->find('list', array('fields' => array('Service.service_name', 'Service.dan_mapping')));
                 $cities = $this->City->find('list', array('fields' => array('City.id', 'City.city')));
+$code=NULL;
+$resource='00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2';
+$redirect_uri='https://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"];
+$client_ID="96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a";
+$grant_type ="client_credentials";
+$client_secret="FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=";
+$scope="https://www.googleapis.com/auth/plus.me";
 
+$url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/token';
+ $data = array('code'=>$code,'resource'=>$resource,'redirect_uri' => $redirect_uri, 'client_id' => $client_ID, 'scope' => $scope, 'grant_type' => $grant_type, 'client_secret' => $client_secret);
                 // curl object for read requests
                 $ch = curl_init();
+                  //curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
+                curl_setopt($ch, constant("CURLOPT_" . 'URL'), $url);
+    curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
+    curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 //curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
                 //curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -117,6 +130,10 @@ class DanDailySyncShell extends AppShell {
 
                 // curl object for write requests
                 $ch1 = curl_init();
+                 $ch1 = curl_init();
+                   curl_setopt($ch1, constant("CURLOPT_" . 'URL'), $url);
+              curl_setopt($ch1, constant("CURLOPT_" . 'POST'), true);
+              curl_setopt($ch1, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt( $ch1, CURLOPT_CONNECTTIMEOUT, 25 );
                 curl_setopt( $ch1, CURLOPT_TIMEOUT, 25 );
@@ -127,6 +144,9 @@ class DanDailySyncShell extends AppShell {
 
                 // curl object for update requests
                 $ch2 = curl_init();
+                curl_setopt($ch2, constant("CURLOPT_" . 'URL'), $url);
+    curl_setopt($ch2, constant("CURLOPT_" . 'POST'), true);
+    curl_setopt($ch2, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt( $ch2, CURLOPT_CONNECTTIMEOUT, 25 );
                 curl_setopt( $ch2, CURLOPT_TIMEOUT, 25 );
@@ -137,6 +157,9 @@ class DanDailySyncShell extends AppShell {
 
                 // curl object for delete requests
                 $ch3 = curl_init();
+                 curl_setopt($ch3, constant("CURLOPT_" . 'URL'), $url);
+                curl_setopt($ch3, constant("CURLOPT_" . 'POST'), true);
+                curl_setopt($ch3, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt( $ch3, CURLOPT_CONNECTTIMEOUT, 25 );
                 curl_setopt( $ch3, CURLOPT_TIMEOUT, 25 );
@@ -146,7 +169,7 @@ class DanDailySyncShell extends AppShell {
                 curl_setopt($ch3, CURLOPT_CUSTOMREQUEST, 'DELETE');
 
                 // check if the web service available and the target site is accessible.
-                curl_setopt( $ch, CURLOPT_URL, $siteUrl . "_api/web" );
+               // curl_setopt( $ch, CURLOPT_URL, $siteUrl . "_api/web" );
                 $checkStatus = curl_exec( $ch );
                 $responseStatus = curl_getinfo( $ch );
                 if($responseStatus['http_code'] != 200) {
