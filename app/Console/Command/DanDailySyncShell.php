@@ -114,7 +114,7 @@ $scope="https://www.googleapis.com/auth/plus.me";
 
 $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/token';
  $data = array('code'=>$code,'resource'=>$resource,'redirect_uri' => $redirect_uri, 'client_id' => $client_ID, 'scope' => $scope, 'grant_type' => $grant_type, 'client_secret' => $client_secret);
-                // curl object for read requests*/
+                 curl object for read requests*/
                 $ch = curl_init();
                   //curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
               
@@ -163,9 +163,9 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 // check if the web service available and the target site is accessible.
                 curl_setopt( $ch, CURLOPT_URL, $siteUrl . "_api/web" );
                 
-                //curl_setopt($ch, CURLOPT_URL, $url . "_api/web" );
-                //curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
-                //curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
+                curl_setopt($ch, CURLOPT_URL, $url . "_api/web" );
+                curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
+                curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 $checkStatus = curl_exec( $ch );
                 $responseStatus = curl_getinfo( $ch );
                 if($responseStatus['http_code'] != 200) {
