@@ -205,13 +205,13 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 }
 
                 // NBR pitch status array id => pitch status
-                $arrPitchStatus = array();
+               $arrPitchStatus = array();
                 $offensivePitchId = null;
                 $defensivePitchId = null;
-                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
+                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
-                $pitchStatusResult = $pitchStatusContent->Id->results;
+                $pitchStatusResult = $pitchStatusContent->d->results;
                 foreach($pitchStatusResult as $result) {
                         $arrPitchStatus[$result->Id] = $result->Title;
                         if($result->Title == 'Offensive Pitch' && $result->DAParentStatus == 'New') {
@@ -221,7 +221,6 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                                 $defensivePitchId = $result->Id;
                         }
                 }
-
                 // NBR pitch stage array id => pitch stage
                 $arrPitchStage = array();
                 $pitchStageUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
