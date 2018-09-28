@@ -178,7 +178,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 
                 //curl_setopt($ch, CURLOPT_URL, $url );
                 curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
-                curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
+                //curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 $checkStatus = curl_exec( $ch );
                 $responseStatus = curl_getinfo( $ch );
                 if($responseStatus['http_code'] != 200) {
