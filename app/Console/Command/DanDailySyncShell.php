@@ -91,7 +91,7 @@ class DanDailySyncShell extends AppShell {
                 //the target url of NBR system.
              
                //$siteUrl = 'syssp-p-nbrsffeed@dentsuaegis.com/sites/NBR';
-               // $userpwd = 'Password01';
+                $userpwd = 'Password01';
 
 
               
