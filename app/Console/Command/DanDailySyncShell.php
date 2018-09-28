@@ -1,6 +1,4 @@
 <?php
-//App::import('Vendor', 'sp', array('file' => 'sp' . DS . 'sp.class.php'));
-// App::import('Vendor', 'Google_Client', array('file' => 'Google_Client' . DS . 'Google_Client.php'));
 App::uses('CakeEmail', 'Network/Email');
 
 class DanDailySyncShell extends AppShell {
@@ -45,59 +43,10 @@ class DanDailySyncShell extends AppShell {
                 $currTime = date('m/d/Y H:i:s');
                 $nextSyncTime = date('m/d/Y H:i:s', strtotime('+1 days'));
                 $emailList = $this->mailList();
-                
-                
-                /*  $clinet= new Google_Client();
-                   $code = null;
-
-                
- if (!$code && isset($_GET['code'])) {
-            $code = $_GET['code'];
-    }
-
-    if ($code) {
-      // We got here from the redirect from a successful authorization grant, fetch the access token
-      $request = Google_Client::$io->makeRequest(new Google_HttpRequest(self::OAUTH2_TOKEN_URI, 'POST', array(), array(
-          'code' => $code,
-          'grant_type' => 'authorization_code',
-          'redirect_uri' => $this->redirectUri,
-          'client_id' => $this->clientId,
-          'client_secret' => $this->clientSecret
-      )));
-
-      if ($request->getResponseHttpCode() == 200) {
-
-        $this->setAccessToken($request->getResponseBody());
-        $this->token['created'] = time();
-        return $this->getAccessToken();
-
-
-      } else {
-     $response = $request->getResponseBody();
-        $decodedResponse = json_decode($response,true );
-        if ($decodedResponse != null && $decodedResponse['error']) {
-          $response = $decodedResponse['error'];
-        }
-        throw new Google_AuthException("Error fetching OAuth2 access token, message: '$response'", $request->getResponseHttpCode());
-      }
-    return true;
-
-  $authUrl = $this->createAuthUrl($service['scope']);
-    header('Location: ' . $authUrl);
-    }*/
-
-   
 
                 //the target url of NBR system.
-             
-              
-              $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
                 $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
-
-
-
-              
-
 
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
@@ -106,33 +55,20 @@ class DanDailySyncShell extends AppShell {
                 $services = $this->Service->find('list', array('fields' => array('Service.id', 'Service.dan_mapping')));
                 $serviceMappings = $this->Service->find('list', array('fields' => array('Service.service_name', 'Service.dan_mapping')));
                 $cities = $this->City->find('list', array('fields' => array('City.id', 'City.city')));
- /*$code=NULL;
-$resource='00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2';
-$redirect_uri='http://connectiprospect.com/';
-$client_ID="96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a";
-$grant_type ="client_credentials";
-$client_secret="FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=";
-$scope="https://www.googleapis.com/auth/plus.me";
 
-$url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/token';
- $data = array('code'=>$code,'resource'=>$resource,'redirect_uri' => $redirect_uri, 'client_id' => $client_ID, 'scope' => $scope, 'grant_type' => $grant_type, 'client_secret' => $client_secret);
-                 curl object for read requests*/
+                // curl object for read requests
                 $ch = curl_init();
-                  //curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
-              
                 //curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
-               // curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
+                //curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 25 );
-               curl_setopt( $ch, CURLOPT_TIMEOUT, 25 );
+                curl_setopt( $ch, CURLOPT_TIMEOUT, 25 );
                 curl_setopt($ch, CURLOPT_USERPWD, $userpwd);
                 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array("accept: application/json;odata=verbose"));
 
                 // curl object for write requests
                 $ch1 = curl_init();
-                
-                  
                 curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt( $ch1, CURLOPT_CONNECTTIMEOUT, 25 );
                 curl_setopt( $ch1, CURLOPT_TIMEOUT, 25 );
@@ -145,7 +81,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 $ch2 = curl_init();
                 curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt( $ch2, CURLOPT_CONNECTTIMEOUT, 25 );
-               curl_setopt( $ch2, CURLOPT_TIMEOUT, 25 );
+                curl_setopt( $ch2, CURLOPT_TIMEOUT, 25 );
                 curl_setopt($ch2, CURLOPT_USERPWD, $userpwd);
                 curl_setopt($ch2, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
                 curl_setopt($ch2, CURLOPT_HTTPHEADER, array("content-type: application/json;odata=verbose", "accept: application/json;odata=verbose", "If-Match: *"));
@@ -153,7 +89,6 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
 
                 // curl object for delete requests
                 $ch3 = curl_init();
-                
                 curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt( $ch3, CURLOPT_CONNECTTIMEOUT, 25 );
                 curl_setopt( $ch3, CURLOPT_TIMEOUT, 25 );
@@ -163,32 +98,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 curl_setopt($ch3, CURLOPT_CUSTOMREQUEST, 'DELETE');
 
                 // check if the web service available and the target site is accessible.
-                
-                
-            /*  $siteUrl= 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize';
-                // check if the web service available and the target site is accessible.
-  $data= array(
-        'response_type'=>'code',
-        "client_id" =>'96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a' ,
-        "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
-         "redirect_uri" => 'http://connectiprospect.com/',
-        "grant_type" => 'client_credentials',
-         "resource" =>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',
-         "scope" => "https://www.googleapis.com/auth/plus.me"
-    ); */
-                
-              
-                
-                //curl_setopt( $ch, CURLOPT_URL, $siteUrl );
-                
-                //curl_setopt($ch, CURLOPT_URL, $siteUrl . "_api/web" );
-                //curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
-                //curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
-               // $checkStatus = curl_exec( $ch );
-               // $responseStatus = curl_getinfo( $ch );
-                
-                
-                 curl_setopt( $ch, CURLOPT_URL, $siteUrl . "_api/web" );
+                curl_setopt( $ch, CURLOPT_URL, $siteUrl . "_api/web" );
                 $checkStatus = curl_exec( $ch );
                 $responseStatus = curl_getinfo( $ch );
                 if($responseStatus['http_code'] != 200) {
@@ -210,7 +120,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 }
 
                 // NBR pitch status array id => pitch status
-               $arrPitchStatus = array();
+                $arrPitchStatus = array();
                 $offensivePitchId = null;
                 $defensivePitchId = null;
                 $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
@@ -226,9 +136,10 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                                 $defensivePitchId = $result->Id;
                         }
                 }
+
                 // NBR pitch stage array id => pitch stage
                 $arrPitchStage = array();
-                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
+                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'eb47971c-2bf9-4ace-90f9-67d5117d9e31')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStageUrl );
                 $pitchStageContent = json_decode(curl_exec( $ch ));
                 $pitchStageResult = $pitchStageContent->d->results;
@@ -248,7 +159,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
 
                 // NBR industry category array id => industry category
                 $arrIndustryCategory = array();
-                $industryCategoryUrl = $siteUrl . "lists(guid'172fc1ba-d15d-497b-8965-09025f005beb')/items";
+                $industryCategoryUrl = $siteUrl . "_api/web/lists(guid'172fc1ba-d15d-497b-8965-09025f005beb')/items";
                 curl_setopt( $ch, CURLOPT_URL, $industryCategoryUrl );
                 $industryCategoryContent = json_decode(curl_exec( $ch ));
                 $industryCategoryResult = $industryCategoryContent->d->results;
@@ -1220,12 +1131,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
         }
 
         public function getNbrCountry($countryUrl) {
-
-
-           
-           // $sp = new SharePointAPI('syssp-p-nbrsffeed@dentsuaegis.com', 'Password01', 'globalappsportal.sharepoint.com/sites/NBR/' ,'NTLM');
-                 $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
-               
+                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 // curl object for read requests
                 $ch = curl_init();
                 //curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
@@ -1249,6 +1155,4 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
 
                 return $this->nbrCountries;
         }
-       
-
 }
