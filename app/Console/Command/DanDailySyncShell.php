@@ -163,7 +163,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 // check if the web service available and the target site is accessible.
                 
                 
-                 /*$url = 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize';
+              $url = 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize';
                 // check if the web service available and the target site is accessible.
   $data= array(
         'response_type'=>'code',
@@ -173,19 +173,17 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
         "grant_type" => 'client_credentials',
          "resource" =>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',
          "scope" => "https://www.googleapis.com/auth/plus.me"
-    );*/
+    );
                 
-                 curl_setopt( $ch, CURLOPT_URL, $siteUrl . "_api/web" );
-                $checkStatus = curl_exec( $ch );
-                $responseStatus = curl_getinfo( $ch );
+              
                 
-               /*  curl_setopt( $ch, CURLOPT_URL, $siteUrl );
+                curl_setopt( $ch, CURLOPT_URL, $siteUrl );
                 
                 curl_setopt($ch, CURLOPT_URL, $url );
                 curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
                 curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 $checkStatus = curl_exec( $ch );
-                $responseStatus = curl_getinfo( $ch );*/
+                $responseStatus = curl_getinfo( $ch );
                 if($responseStatus['http_code'] != 200) {
                 // if request is not completed successfully, generate notification mail
                         $responseStatus['date_n_time'] = $currTime;
