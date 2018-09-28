@@ -169,7 +169,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
         'response_type'=>'code',
         "client_id" =>'96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a' ,
         "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
-         "redirect_uri" => 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"],
+         "redirect_uri" => 'http://connectiprospect.com/',
         "grant_type" => 'client_credentials',
          "resource" =>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',
          "scope" => "https://www.googleapis.com/auth/plus.me"
