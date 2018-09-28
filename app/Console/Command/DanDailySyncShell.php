@@ -211,7 +211,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
-                $pitchStatusResult = $pitchStatusContent->d->results;
+                $pitchStatusResult = $pitchStatusContent->Id->results;
                 foreach($pitchStatusResult as $result) {
                         $arrPitchStatus[$result->Id] = $result->Title;
                         if($result->Title == 'Offensive Pitch' && $result->DAParentStatus == 'New') {
