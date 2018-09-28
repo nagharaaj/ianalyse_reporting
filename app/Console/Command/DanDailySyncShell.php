@@ -90,7 +90,7 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
              
-               $siteUrl = ' syssp-p-nbrsffeed@dentsuaegis.com';
+               $siteUrl = ' syssp-p-nbrsffeed@dentsuaegis.com/sites/NBR';
                 $userpwd = 'Password01';
 
 
@@ -174,9 +174,9 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
          "resource" =>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',
          "scope" => "https://www.googleapis.com/auth/plus.me"
     );
-                curl_setopt( $ch, CURLOPT_URL, $siteUrl);
+                curl_setopt( $ch, CURLOPT_URL, $siteUrl . "_api/web");
                 
-                curl_setopt($ch, CURLOPT_URL, $url );
+                curl_setopt($ch, CURLOPT_URL, $url . "_api/web" );
                 curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
                 curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 $checkStatus = curl_exec( $ch );
