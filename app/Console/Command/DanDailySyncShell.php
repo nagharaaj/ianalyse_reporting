@@ -90,8 +90,10 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
              
-               //$siteUrl = 'syssp-p-nbrsffeed@dentsuaegis.com/sites/NBR';
-                $userpwd = 'Password01';
+              
+              $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+
 
 
               
@@ -163,7 +165,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 // check if the web service available and the target site is accessible.
                 
                 
-              $siteUrl= 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize';
+            /*  $siteUrl= 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize';
                 // check if the web service available and the target site is accessible.
   $data= array(
         'response_type'=>'code',
@@ -173,15 +175,15 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
         "grant_type" => 'client_credentials',
          "resource" =>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',
          "scope" => "https://www.googleapis.com/auth/plus.me"
-    );
+    ); */
                 
               
                 
                 //curl_setopt( $ch, CURLOPT_URL, $siteUrl );
                 
                 curl_setopt($ch, CURLOPT_URL, $siteUrl . "_api/web" );
-                curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
-                curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
+                //curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
+                //curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 $checkStatus = curl_exec( $ch );
                 $responseStatus = curl_getinfo( $ch );
                 if($responseStatus['http_code'] != 200) {
@@ -222,7 +224,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
 
                 // NBR pitch stage array id => pitch stage
                 $arrPitchStage = array();
-                $pitchStageUrl = $siteUrl . "lists(guid'692736e7-8c0a-415e-9a73-2f33717b1a15')/items";
+                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStageUrl );
                 $pitchStageContent = json_decode(curl_exec( $ch ));
                 $pitchStageResult = $pitchStageContent->d->results;
