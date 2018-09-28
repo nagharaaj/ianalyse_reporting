@@ -90,8 +90,8 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
              
-               $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+               $siteUrl = ' syssp-p-nbrsffeed@dentsuaegis.com';
+                $userpwd = 'Password01';
 
 
               
@@ -161,6 +161,19 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 curl_setopt($ch3, CURLOPT_CUSTOMREQUEST, 'DELETE');
 
                 // check if the web service available and the target site is accessible.
+                
+                
+                $url = 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize';
+                // check if the web service available and the target site is accessible.
+   $data= array(
+        'response_type'=>'code',
+        "client_id" =>'96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a' ,
+        "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
+         "redirect_uri" => 'http://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"],
+        "grant_type" => 'client_credentials',
+         "resource" =>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',
+         "scope" => "https://www.googleapis.com/auth/plus.me"
+    );
                 curl_setopt( $ch, CURLOPT_URL, $siteUrl . "_api/web" );
                 
                 curl_setopt($ch, CURLOPT_URL, $url . "_api/web" );
