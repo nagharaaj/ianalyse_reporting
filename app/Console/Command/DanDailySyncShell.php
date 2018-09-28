@@ -90,8 +90,8 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
              
-               $siteUrl = 'syssp-p-nbrsffeed@dentsuaegis.com/sites/NBR';
-                $userpwd = 'Password01';
+               //$siteUrl = 'syssp-p-nbrsffeed@dentsuaegis.com/sites/NBR';
+               // $userpwd = 'Password01';
 
 
               
@@ -163,7 +163,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 // check if the web service available and the target site is accessible.
                 
                 
-              $url = 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize';
+              $siteUrl= 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize';
                 // check if the web service available and the target site is accessible.
   $data= array(
         'response_type'=>'code',
@@ -179,7 +179,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 
                 //curl_setopt( $ch, CURLOPT_URL, $siteUrl );
                 
-                curl_setopt($ch, CURLOPT_URL, $url );
+                curl_setopt($ch, CURLOPT_URL, $siteUrl . "_api/web" );
                 curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
                 curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $data);
                 $checkStatus = curl_exec( $ch );
@@ -206,7 +206,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 $arrPitchStatus = array();
                 $offensivePitchId = null;
                 $defensivePitchId = null;
-                $pitchStatusUrl = $siteUrl . "Lists/Pitchs(list ID'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
+                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
                 $pitchStatusResult = $pitchStatusContent->d->results;
