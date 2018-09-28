@@ -90,7 +90,7 @@ class DanDailySyncShell extends AppShell {
 
                 //the target url of NBR system.
              
-               $siteUrl = ' syssp-p-nbrsffeed@dentsuaegis.com/sites/NBR';
+               $siteUrl = 'syssp-p-nbrsffeed@dentsuaegis.com/sites/NBR';
                 $userpwd = 'Password01';
 
 
@@ -203,7 +203,7 @@ $url='https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oau
                 $arrPitchStatus = array();
                 $offensivePitchId = null;
                 $defensivePitchId = null;
-                $pitchStatusUrl = $siteUrl . "lists(guid'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
+                $pitchStatusUrl = $siteUrl . "Lists/Pitchs(list ID'41a15a89-ddaa-476a-8277-dc391b69cfaf')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
                 $pitchStatusResult = $pitchStatusContent->d->results;
