@@ -102,53 +102,15 @@ class AdminController extends AppController {
    //  );
          
 		
-		$clinet= new Google_Client();
-  $code = null;
 		
-		
-		if (!$code && isset($_GET['code'])) {
-      $code = $_GET['code'];
-    }
-
-    if ($code) {
-        echo "adad";
-      // We got here from the redirect from a successful authorization grant, fetch the access token
-      $request = Google_Client::$io->makeRequest(new Google_HttpRequest(self::OAUTH2_TOKEN_URI, 'POST', array(), array(
-          'code' => $code,
-          'grant_type' => 'authorization_code',
-          'redirect_uri' => $this->redirectUri,
-          'client_id' => $this->clientId,
-          'client_secret' => $this->clientSecret
-      )));
-
-      if ($request->getResponseHttpCode() == 200) {
-
-        $this->setAccessToken($request->getResponseBody());
-        $this->token['created'] = time();
-        echo $this->getAccessToken();
-
-        return $this->getAccessToken();
-
-
-      } else {
-     $response = $request->getResponseBody();
-        $decodedResponse = json_decode($response,true );
-        if ($decodedResponse != null && $decodedResponse['error']) {
-          $response = $decodedResponse['error'];
-        }
-        throw new Google_AuthException("Error fetching OAuth2 access token, message: '$response'", $request->getResponseHttpCode());
-      }
-
-
-}
 
 
 	
  
 		
              //the target url of NBR system old 
-            // $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-                  // $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
+            $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+             $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
 
 
   
