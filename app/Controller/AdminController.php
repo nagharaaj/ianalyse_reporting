@@ -1,17 +1,8 @@
 <?php
-
-
-      App::uses('CakeEmail', 'Network/Email');
-// App::import('Vendor', 'Google_Client', array('file' => 'Google_Client' . DS . 'Google_Client.php'));
-     
+App::uses('CakeEmail', 'Network/Email');
 class AdminController extends AppController {
-
-   
-
 	public $helpers = array('Html', 'Form');
-
         public $components = array('RequestHandler');
-
         public $uses = array(
             'City',
             'ClientCategory',
@@ -32,17 +23,13 @@ class AdminController extends AppController {
             'UserAdminAccess',
             'AdministrationLink'
         );
-
-        public $unwanted_array = array( 'Š'=>'S', 'š'=>'s', 'Ž'=>'Z' , 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+        public $unwanted_array = array( 'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
                             'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
                             'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
                             'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
                             'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', '\''=>'', '"'=>'', ' '=>'', '`'=>'', '-' => '', '_' => '');
-
         public function beforeFilter() {
-
                 $this->Auth->allow('login', 'logout');
-
                 $this->Auth->loginAction = array(
                   'controller' => 'users',
                   'action' => 'login'
@@ -60,72 +47,37 @@ class AdminController extends AppController {
                   'action' => 'index'
                 );
         }
-
-         
-
         public function beforeRender() {
                 if($this->Auth->user()) {
                         $this->set('admNavLinks', parent::generateNav($this->arrNav, $this->Auth->user()));
                 }
         }
-
         public function ad_hoc_reconciliation () {
-
-           
-
                 $currDt = date('Y-m-d h:i:s');
                 $lastDayDt = date('Y') . '-01-01';
                 $currTime = date('m/d/Y h:i:s');
                 $this->UserLoginRole->Behaviors->attach('Containable');
-
                 $globalUsers = $this->UserLoginRole->find('all', array('fields' => array('User.display_name', 'User.email_id'), 'contain' => array('User', 'LoginRole'), 'conditions' => array('LoginRole.name' => 'Global', 'User.daily_sync_mail' => 1), 'order' => 'User.display_name'));
                 $emailList = array('sam.pitcher@dentsuaegis.com');
                 foreach($globalUsers as $globalUser) {
                         $emailList[] = $globalUser['User']['email_id'];
                 }
                 $emailList = array('siddharthk@evolvingsols.com');
-
-		
-		//if (isset($_GET['code'])) {
-
-    // try to get an access token
-    //$url = 'https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2/';
-      //$url = 'https://login.microsoftonline.com/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/oauth2/authorize/';
-    //$params = array(
-        //"code" => $code,
-       // "client_id" =>'96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a' ,
-       // "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
-       //  "redirect_uri" => 'https://' . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"],
-       //  "grant_type" => 'authorization_code',
-         //"resource" =>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a" https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2'
-
-   //  );
-         
 		
 		
-
-
-	
- 
-		
-             //the target url of NBR system old 
-            $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
-             $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
-
-
-  
-
+                //the target url of NBR system.
+                $siteUrl = 'team.dentsuaegis.com/sites/nbr/';
+                $userpwd = 'MEDIA\sysSP-P-NBR:Jfo829/K!';
                 // curl object for read requests
                 $ch = curl_init();
-                //curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
-                //curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
+                curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1" );
+                curl_setopt( $ch, CURLOPT_COOKIEJAR, $cookie );
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 25 );
                 curl_setopt( $ch, CURLOPT_TIMEOUT, 25 );
                 curl_setopt($ch, CURLOPT_USERPWD, $userpwd);
                 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array("accept: application/json;odata=verbose"));
-
                 // curl object for write requests
                 $ch1 = curl_init();
                 curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
@@ -135,7 +87,6 @@ class AdminController extends AppController {
                 curl_setopt($ch1, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
                 curl_setopt($ch1, CURLOPT_HTTPHEADER, array("content-type: application/json;odata=verbose", "accept: application/json;odata=verbose"));
                 curl_setopt($ch1, CURLOPT_POST, true);
-
                 // curl object for update requests
                 $ch2 = curl_init();
                 curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
@@ -145,30 +96,24 @@ class AdminController extends AppController {
                 curl_setopt($ch2, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
                 curl_setopt($ch2, CURLOPT_HTTPHEADER, array("content-type: application/json;odata=verbose", "accept: application/json;odata=verbose", "If-Match: *"));
                 curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, 'MERGE');
-
                 //array of iProspect pitch status mappings with NBR
                 $pitchStatusMappings = $this->PitchStage->find('list', array('fields' => array('PitchStage.pitch_stage', 'PitchStage.dan_mapping')));
                 //array of currencies and conversion rates
                 $currencies = $this->Currency->find('list', array('fields' => array('Currency.id', 'Currency.currency')));
                 $services = $this->Service->find('list', array('fields' => array('Service.id', 'Service.service_name')));
                 $cities = $this->City->find('list', array('fields' => array('City.id', 'City.city')));
-
                 // NBR pitch status array id => pitch status
                 $arrPitchStatus = array();
-                   $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
+                $pitchStatusUrl = $siteUrl . "_api/web/lists(guid'c47bb064-faa5-4ab7-812c-3b005843314d')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStatusUrl );
                 $pitchStatusContent = json_decode(curl_exec( $ch ));
-                 $pitchStatusResult = $pitchStatusContent->d->results;
-
+                $pitchStatusResult = $pitchStatusContent->d->results;
                 foreach($pitchStatusResult as $result) {
                         $arrPitchStatus[$result->Id] = $result->Title;
                 }
-               /* echo '<pre>';
-                print_r($result);
-                echo '</pre>';*/
                 // NBR pitch stage array id => pitch stage
                 $arrPitchStage = array();
-                 $pitchStageUrl = $siteUrl . "_api/web/lists(guid'eb47971c-2bf9-4ace-90f9-67d5117d9e31')/items";
+                $pitchStageUrl = $siteUrl . "_api/web/lists(guid'eb47971c-2bf9-4ace-90f9-67d5117d9e31')/items";
                 curl_setopt( $ch, CURLOPT_URL, $pitchStageUrl );
                 $pitchStageContent = json_decode(curl_exec( $ch ));
                 $pitchStageResult = $pitchStageContent->d->results;
@@ -193,7 +138,6 @@ class AdminController extends AppController {
                 foreach($industryCategoryResult as $result) {
                         $arrIndustryCategory[$result->Id] = $result->Title;
                 }
-
                 // NBR currencies array id => currency
                 $arrNbrCurrencies = array();
                 $arrEuroCurrency = array(); // NBR Euros => USD conversion rates
@@ -227,20 +171,16 @@ class AdminController extends AppController {
                         }
                 }
                 // NBR countries array id => country
-
                 $arrNbrCountry = array();
                 $countryUrl = $siteUrl . "_api/web/lists(guid'100f63e1-6845-4fa8-b3f3-0ee87c1dbdd5')/items";
                 curl_setopt( $ch, CURLOPT_URL, $countryUrl );
                 $countryContent = json_decode(curl_exec( $ch ));
                 $countryResult = $countryContent->d->results;
-
                 foreach($countryResult as $result) {
                         $arrNbrCountry[$result->Id] = $result->Title;
                 }
-              
-
                 // query to aggregate client revenue by services data in iProspect grouped by country, client name, pitch status
-                 $clients = $this->ClientRevenueByService->find('all', array(
+                $clients = $this->ClientRevenueByService->find('all', array(
                     'fields' => array(
                         'ClientRevenueByService.pitch_stage',
                         'group_concat(ClientRevenueByService.estimated_revenue) as estimated_revenue', 'group_concat(ClientRevenueByService.currency_id) as currency_id',
@@ -253,9 +193,7 @@ class AdminController extends AppController {
                     'group' => array('Country.country', 'ClientRevenueByService.pitch_stage'),
                     'order' => 'Country.country, ClientRevenueByService.pitch_stage asc'
                 ));
-                echo '<pre>'; print_r($clients);
-                 echo '</pre>';
-
+                //echo '<pre>'; print_r($clients);
                 $totalRevenue = 0;
                 $totalRevenueByCountry = array();
                 $totalRevenueByPitchStatus = array();
@@ -269,7 +207,6 @@ class AdminController extends AppController {
                                 $country = $client['Country']['country'];
                         }
                         $pitchStatus = $pitchStatusMappings[$client['ClientRevenueByService']['pitch_stage']];
-
                         $estimatedRevenueUSD = 0;
                         $arrEstRevenue = explode(',', $client[0]['estimated_revenue']);
                         $arrCurrency = explode(',', $client[0]['currency_id']);
@@ -299,12 +236,10 @@ class AdminController extends AppController {
                         } else {
                                 $totalRevenueByPitchStatus[$pitchStatus] += $estimatedRevenueUSD;
                         }
-
                         if(array_search($country, $arrCountry) === false) {
                                 $arrCountry[] = $country;
                         }
                 }
-
                 $networkBrandId = array_search('iProspect', $arrNetworkBrand);
                 $noOfRecords = 0;
                 $totalNbrRevenue = 0;
@@ -328,7 +263,6 @@ class AdminController extends AppController {
                                     ->from(array('connectiprospect@gmail.com' => 'Connect iProspect'))
                                     ->subject('Connect < > NBRT reconciliation failed')
                                     ->send();
-
                                 CakeLog::write('error', 'NBRT reconciliation failed. A country \''.$country.'\' not found in NBRT.');
                                 // closing all the curl sessions at the end
                                 curl_close ( $ch );
@@ -345,11 +279,10 @@ class AdminController extends AppController {
                         $countryPitchContent = json_decode(curl_exec( $ch ));
                         //echo '<pre>'; print_r($countryPitchContent); echo '</pre>'; exit(0);
                         $countryPitchResult = (isset($countryPitchContent->d)) ? $countryPitchContent->d : null;
-                        echo '<pre>'; print_r($countryPitchResult); echo '</pre>'; exit(0);
+                        //echo '<pre>'; print_r($countryPitchResult); echo '</pre>'; exit(0);
                         foreach($countryPitchResult->results as $result) {
                                 $estimatedRevenueUSD = $result->DAEstimatedAnnualRevenueUSD;
                                 $pitchStatus = $arrPitchStatus[$result->DAPitchStatusId];
-
                                 $totalNbrRevenue += $estimatedRevenueUSD;
                                 if(isset($totalNbrRevenueByCountry[$country]) === false) {
                                         $totalNbrRevenueByCountry[$country] = $estimatedRevenueUSD;
@@ -389,7 +322,6 @@ class AdminController extends AppController {
                                             ->from(array('connectiprospect@gmail.com' => 'Connect iProspect'))
                                             ->subject('Connect < > NBRT reconciliation failed')
                                             ->send();
-
                                         CakeLog::write('error', 'NBRT reconciliation failed. A country \''.$country.'\' not found in NBRT.');
                                         // closing all the curl sessions at the end
                                         curl_close ( $ch );
@@ -407,7 +339,7 @@ class AdminController extends AppController {
                         $countryCurrency = $arrCountryCurrency[$country];
                         if($totalRevenueByCountry[$country] != $totalNbrRevenueByCountry[$country]) {
                                 // query to aggregate client revenue by services data in iProspect grouped by country, client name, pitch status
-                                 $clients = $this->ClientRevenueByService->find('all', array(
+                                $clients = $this->ClientRevenueByService->find('all', array(
                                     'fields' => array(
                                         'ClientRevenueByService.client_name', 'ClientRevenueByService.parent_company', 'ClientRevenueByService.pitch_date',
                                         'ClientRevenueByService.pitch_stage', 'ClientRevenueByService.client_since_month', 'ClientRevenueByService.client_since_year',
@@ -434,8 +366,7 @@ class AdminController extends AppController {
                                     'group' => array('Country.country', 'ClientRevenueByService.client_name', 'ClientRevenueByService.pitch_stage'),
                                     'order' => 'Country.country', 'ClientRevenueByService.client_name asc, ClientRevenueByService.pitch_stage asc, ClientRevenueByService.pitch_date desc',
                                 ));
-                                echo '<pre>'; print_r($clients); exit(0);
-
+                                //echo '<pre>'; print_r($clients); exit(0);
                                 foreach($clients as $client) {
                                         // request to check whether the client name already exists in NBR client list
                                         $clientSearchUrl = $siteUrl . '_api/web/lists/GetByTitle(\'Client\')/items';
@@ -464,7 +395,6 @@ class AdminController extends AppController {
                                                         curl_setopt( $ch1, CURLOPT_URL, $newClientUrl );
                                                         $newClientContent = json_decode(curl_exec( $ch1 ));
                                                         //echo '<pre>'; print_r($newClientContent); echo '</pre>';
-
                                                         $clientId = $newClientContent->d->Id;
                                                         $clientHolidngCompany = $client['ClientRevenueByService']['parent_company'];
                                                 } else { // if industry category does not map, stop the execution of the script
@@ -480,7 +410,6 @@ class AdminController extends AppController {
                                                             ->from(array('connectiprospect@gmail.com' => 'Connect iProspect'))
                                                             ->subject('Connect < > NBRT reconciliation failed')
                                                             ->send();
-
                                                         CakeLog::write('error', 'NBRT reconciliation failed. Mapping for industry category \''.$client['ClientCategory']['dan_mapping'].'\' not found in NBRT.');
                                                         // closing all the curl sessions at the end
                                                         curl_close ( $ch );
@@ -493,7 +422,6 @@ class AdminController extends AppController {
                                                 $clientHolidngCompany = $clientSearchResult->results[0]->DACltHoldCompany;
                                                 $industryCategoryId = array_search($client['ClientCategory']['dan_mapping'], $arrIndustryCategory);
                                         }
-
                                         if($clientId != null) { // if a valid client id, process the other details
                                                 $responseStatus = array();
                                                 $arrComments = array_unique(explode(',', $client[0]['comments']));
@@ -637,7 +565,6 @@ class AdminController extends AppController {
                                                             ->from(array('connectiprospect@gmail.com' => 'Connect iProspect'))
                                                             ->subject('Connect < > NBRT reconciliation failed')
                                                             ->send();
-
                                                         CakeLog::write('error', 'NBRT reconciliation failed. '. $responseStatus['reason'] .'.');
                                                         // closing all the curl sessions at the end
                                                         curl_close ( $ch );
@@ -645,7 +572,6 @@ class AdminController extends AppController {
                                                         curl_close ( $ch2 );
                                                         exit(0);
                                                 }
-
                                                 //request to check whether entry of a pitch for the client exists under the country pitch list
                                                 $pitchExistsUrl = $siteUrl . $countryCode .'/_api/web/lists/getbytitle(\'Pitch\')/items';
                                                 $pitchExistsFilter = urlencode('DACLient eq ' . $clientId . ' and DALeadCountry eq ' . $countryId . ' and DANetworkBrand eq ' . $networkBrandId . ' and DAPitchStatus eq ' . $pitchStatusId . ''); // and DATypeOfNetwork eq \'Digital and Creative\'
@@ -668,7 +594,6 @@ class AdminController extends AppController {
                                                                     ->from(array('connectiprospect@gmail.com' => 'Connect iProspect'))
                                                                     ->subject('Connect < > NBRT reconciliation failed')
                                                                     ->send();
-
                                                                 CakeLog::write('error', 'NBRT reconciliation failed. Access to a country \''.$country.'\' denied in NBRT.');
                                                                 // closing all the curl sessions at the end
                                                                 curl_close ( $ch );
@@ -779,7 +704,6 @@ class AdminController extends AppController {
                 curl_close ( $ch );
                 curl_close ( $ch1 );
                 curl_close ( $ch2 );
-
                 // mail notification on successful execution of reconciliation
                 $responseStatus = array();
                 $responseStatus['date_n_time'] = $currTime;
@@ -797,9 +721,7 @@ class AdminController extends AppController {
                     ->from(array('connectiprospect@gmail.com' => 'Connect iProspect'))
                     ->subject('Connect < > NBRT reconciliation completed successfully')
                     ->send();
-
                 $this->set('data', $responseStatus);
-
                 CakeLog::write('log', 'NBRT sync completed successfully. time of execution : ' .$currTime. '.');
         }
 }
