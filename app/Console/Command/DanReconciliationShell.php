@@ -31,18 +31,23 @@ class DanReconciliationShell extends AppShell {
 
         public function main() {
                 
-                
-                	$HttpSocket = new HttpSocket();
-           $response = $http->post('http://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',	
-        'client_id' ='96d6293f-922a-4cb0-bbb1-38e58eb16008@4345a7b9-9a63-4910-a426-35363201d503',
-        'client_secret' ='FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
-        'grant_type' = 'client_credentials',
-        'resource'='00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a'
-		   );
-                
-                $json = json_decode($response, true);
+                $HttpSocket = new HttpSocket();
+$response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',[
+  'client_id' => '96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a',
+  'client_secret' => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
+  
+        "grant_type" => 'client_credentials',
+  
+  'resource'=>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a',
+
+]);
+
+
+//print_r($response);
+
+$json = json_decode($response, true);
 $access_token= $json['access_token'];
-print_r($access_token); die;
+print_r($access_token);
 	
                 set_time_limit(0);
                 ini_set('memory_limit', '-1');
