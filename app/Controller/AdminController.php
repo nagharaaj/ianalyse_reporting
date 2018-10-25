@@ -56,7 +56,9 @@ class AdminController extends AppController {
         public function ad_hoc_reconciliation () {
 		
 		$HttpSocket = new HttpSocket();
-           $response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2');
+           $response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',
+	'$client_id'='96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a'				 
+					);
 		
 		print_r($response);die;
                 $currDt = date('Y-m-d h:i:s');
