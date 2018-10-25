@@ -1,6 +1,6 @@
 <?php
 App::uses('CakeEmail', 'Network/Email');
-//App::uses('HttpSocket', 'Network/Http');
+App::uses('HttpSocket', 'Network/Http');
 class AdminController extends AppController {
 	public $helpers = array('Html', 'Form');
         public $components = array('RequestHandler');
@@ -196,7 +196,7 @@ class AdminController extends AppController {
                     'group' => array('Country.country', 'ClientRevenueByService.pitch_stage'),
                     'order' => 'Country.country, ClientRevenueByService.pitch_stage asc'
                 ));
-                //echo '<pre>'; print_r($clients);
+                echo '<pre>'; print_r($clients);
                 $totalRevenue = 0;
                 $totalRevenueByCountry = array();
                 $totalRevenueByPitchStatus = array();
