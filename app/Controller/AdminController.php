@@ -63,7 +63,7 @@ class AdminController extends AppController {
 	'resource'=>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a'
 		]);
 		
-		
+		print_r($response);die;
                 $currDt = date('Y-m-d h:i:s');
                 $lastDayDt = date('Y') . '-01-01';
                 $currTime = date('m/d/Y h:i:s');
