@@ -1,7 +1,7 @@
 <?php
 App::uses('CakeEmail', 'Network/Email');
 App::uses('HttpSocket', 'Network/Http');
-use Cake\Http\Client;
+
 class AdminController extends AppController {
 	public $helpers = array('Html', 'Form');
         public $components = array('RequestHandler');
@@ -56,14 +56,6 @@ class AdminController extends AppController {
         }
         public function ad_hoc_reconciliation () {
 		
-		$http = new Client();
-           $response = $http->post('http://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',[
-		
-        "client_id" =>'96d6293f-922a-4cb0-bbb1-38e58eb16008@4345a7b9-9a63-4910-a426-35363201d503' ,
-        "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
-        "grant_type" => 'client_credentials',
-        'resource'=>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a'
-    ]);
 		
 		
 		
