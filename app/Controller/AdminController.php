@@ -201,7 +201,7 @@ $response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992
                     'group' => array('Country.country', 'ClientRevenueByService.pitch_stage'),
                     'order' => 'Country.country, ClientRevenueByService.pitch_stage asc'
                 ));
-                echo '<pre>'; print_r($clients);
+              //  echo '<pre>'; print_r($clients);
                 $totalRevenue = 0;
                 $totalRevenueByCountry = array();
                 $totalRevenueByPitchStatus = array();
