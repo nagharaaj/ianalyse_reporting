@@ -342,3 +342,9 @@ Configure::write('IP.ldap_configuration', array(
     "ldap_user" => "sysamdc2web02ldap@globalloc.com",
     "ldap_passwd" => "Neyo48pu39"
 ));
+
+
+Cache::config('default', array(
+    'engine' => 'File',
+    'mask' => 0666,
+));
