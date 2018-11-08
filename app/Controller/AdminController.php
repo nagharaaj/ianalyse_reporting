@@ -69,7 +69,7 @@ $response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992
 ]);
 		$json = json_decode($response, true);
 $access_token= $json['access_token'];
-print_r($access_token);
+print_r($access_token);die;
 		
                 $currDt = date('Y-m-d h:i:s');
                 $lastDayDt = date('Y') . '-01-01';
