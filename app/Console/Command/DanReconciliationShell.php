@@ -66,7 +66,7 @@ class DanReconciliationShell extends AppShell {
     //header("Location: " . $request_to);
 
     print_r($request_to);
-}
+} die;
 		
 		
 		
