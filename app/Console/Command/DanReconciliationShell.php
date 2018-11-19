@@ -1,5 +1,6 @@
 <?php
 App::uses('CakeEmail', 'Network/Email');
+App::uses('HttpSocket', 'Network/Http');
 
 
 class DanReconciliationShell extends AppShell {
