@@ -72,8 +72,11 @@ class AdminController extends AppController {
     ));
     $request_to = $response . '?' . http_build_query($params);
     //header("Location: " . $request_to);
-    print_r($request_to); die;
+    print_r($request_to); 
 } 
+	die;
+		
+		
 		
                 $currDt = date('Y-m-d h:i:s');
                 $lastDayDt = date('Y') . '-01-01';
