@@ -69,6 +69,7 @@ $response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992
 ]);
 		
 		print_r($response);
+		die;
 	
 		
                 $currDt = date('Y-m-d h:i:s');
