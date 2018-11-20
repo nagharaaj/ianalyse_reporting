@@ -74,7 +74,7 @@ class AdminController extends AppController {
     //header("Location: " . $request_to);
     print_r($request_to); 
 } 
-	 echo '<pre>'; print_r($request_to);
+	 echo '<pre>'; print_r($request_to); die;
 		
 		
 		
@@ -218,7 +218,7 @@ class AdminController extends AppController {
                     'group' => array('Country.country', 'ClientRevenueByService.pitch_stage'),
                     'order' => 'Country.country, ClientRevenueByService.pitch_stage asc'
                 ));
-                echo '<pre>'; print_r($clients);
+                //echo '<pre>'; print_r($clients);
                 $totalRevenue = 0;
                 $totalRevenueByCountry = array();
                 $totalRevenueByPitchStatus = array();
