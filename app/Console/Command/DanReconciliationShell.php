@@ -43,52 +43,19 @@ class DanReconciliationShell extends AppShell {
                 $currTime = date('m/d/Y H:i:s');
                 $emailList = $this->mailList();
 
-		 if (isset($_GET['code'])) {
-           $code="NULL";
-            $HttpSocket = new HttpSocket();
-$response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2');
-$params = array(
-        "code" => $code,
-        "client_id" => '96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a',
-        "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
-        
-        "grant_type" => "client_credentials",
-        'resource'=>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a'
-    );
-$ch = curl_init();
-    curl_setopt($ch, constant("CURLOPT_" . 'URL'), $response);
-    curl_setopt($ch, constant("CURLOPT_" . 'POST'), true);
-    curl_setopt($ch, constant("CURLOPT_" . 'POSTFIELDS'), $params);
-    $output = curl_exec($ch);
-    $info = curl_getinfo($ch);
-    curl_close($ch);
-    if ($info['http_code'] === 200) {
-        header('Content-Type: ' . $info['content_type']);
-       
-return $output;
-print_r($output);
-    }
-    else{
-        return 'An error happened';
-    }
-}
-else{
-    $code="NULL";
-    $HttpSocket = new HttpSocket();
-   $response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2',
-   $params = array(
-        "code"=>"NULL",
-                "client_id" => '96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a',
-        "client_secret" => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
-        
-        "grant_type" => "client_credentials",
-        'resource'=>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a'
-    ));
-    $request_to = $response . '?' . http_build_query($params);
-    //header("Location: " . $request_to);
-    print_r($request_to);
-}
-die;	
+		$HttpSocket = new HttpSocket();
+$response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2', $params = array(
+  'client_id' => '96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a',
+  'client_secret' => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
+  
+        "grant_type" => 'client_credentials',
+  
+  'resource'=>'00000003-0000-0ff1-ce00-000000000000/globalappsportal.sharepoint.com@6e8992ec-76d5-4ea5-8eae-b0c5e558749a'
+
+));
+		
+		print_r($response);die;
+		
 		
 		
                 //the target url of NBR system.
