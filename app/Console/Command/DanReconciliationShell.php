@@ -43,7 +43,7 @@ class DanReconciliationShell extends AppShell {
                 $currTime = date('m/d/Y H:i:s');
                 $emailList = $this->mailList();
 
-		$HttpSocket = new HttpSocket();
+		 /* $HttpSocket = new HttpSocket();
 $response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992ec-76d5-4ea5-8eae-b0c5e558749a/tokens/OAuth/2', $params = array(
   'client_id' => '96d6293f-922a-4cb0-bbb1-38e58eb16008@6e8992ec-76d5-4ea5-8eae-b0c5e558749a',
   'client_secret' => 'FXXI8/bRHbpNKjGSwFMb4kM5sRAJbNKUQ1b90b4nD44=',
@@ -54,7 +54,7 @@ $response = $HttpSocket->post('https://accounts.accesscontrol.windows.net/6e8992
 
 ));
 		
-		print_r($response);die;
+		print_r($response);die;*/
 		
 		
 		
