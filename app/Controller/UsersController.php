@@ -74,6 +74,7 @@ class UsersController extends AppController {
                         $password = $this->request->data['User']['password'];
 
                         $ldap = new CLdapLogin($ldapServer, $ldapPort, $domain, $username, $password, $baseDN);
+			var_dump($ldap);die; 
                         if (true == $ldap->login()) {
                                 $loggedUser = $this->User->find('first', array('conditions' => array('User.username' => $username, 'User.is_active' => 1)));
                                 if($loggedUser) {
