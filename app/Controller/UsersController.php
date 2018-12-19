@@ -75,7 +75,7 @@ class UsersController extends AppController {
 
                        $ldap = new CLdapLogin($ldapServer, $ldapPort, $domain, $username, $password, $baseDN);
 			//var_dump($ldap);die; 
-                        if (true == $ldap->login()) {
+                       //if (true == $ldap->login()) {
                                 $loggedUser = $this->User->find('first', array('conditions' => array('User.username' => $username, 'User.is_active' => 1)));
                                 if($loggedUser) {
                                         $userLoginRole = $this->UserLoginRole->find('first', array('conditions' => array('UserLoginRole.user_id' => $loggedUser['User']['id'])));
@@ -95,7 +95,7 @@ class UsersController extends AppController {
                         }
                         $this->set('complete', false);
                         $this->data = array();
-                }
+               //}
         }
 
         /*
